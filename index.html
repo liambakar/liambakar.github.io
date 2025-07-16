@@ -192,7 +192,7 @@
 
         <script>
             // Fetch and insert the header
-            fetch('./header.html')
+            fetch('./html-components/header.html')
                 .then((response) => response.text())
                 .then((data) => {
                     document.getElementById('header-placeholder').innerHTML =
@@ -209,7 +209,7 @@
                 });
 
             // Fetch and insert the footer
-            fetch('./footer.html')
+            fetch('./html-components/footer.html')
                 .then((response) => response.text())
                 .then((data) => {
                     document.getElementById('footer-placeholder').innerHTML =
