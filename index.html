@@ -1,13 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Awesome Website</title>
-</head>
-<body>
-    <h1>Welcome to my website!</h1>
-    <p>This is my new GitHub Pages site.</p>
-</body>
-<div>helloooooooooo</div>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Liam Bakar - Personal Website</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts: Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* Use the Inter font family */
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            /* Add a subtle transition for smooth scrolling and color changes */
+            .nav-link {
+                transition: color 0.3s ease-in-out;
+            }
+        </style>
+    </head>
+
+    <div id="header-placeholder"></div>
+
+    <body class="bg-slate-900 text-slate-300 antialiased">
+        <main class="container mx-auto px-6 pt-24 md:pt-32">
+            <!-- Section: About Me -->
+            <section id="about" class="py-16">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0">
+                        <img
+                            src="images/4.jpg"
+                            alt="Liam Bakar"
+                            class="rounded-full object-cover w-full h-full shadow-lg border-4 border-slate-700"
+                        />
+                    </div>
+                    <div>
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            Hi, I'm Liam
+                        </h1>
+                        <p class="mt-4 text-lg text-slate-400">
+                            I'm a graduate (MS) student at University of
+                            Washington, Seattle, specializing in human-centered
+                            AI, sepcifically for health. My interests include
+                            allowing for healthier usage of LLMs and LLM usage
+                            for health. I want to help people. I'm passionate
+                            about using technology to solve complex problems and
+                            advance scientific discovery.
+                        </p>
+                        <div class="mt-8 flex space-x-4">
+                            <a
+                                href="https://drive.google.com/file/d/1FKlclTdXiDQOTgi1KJjGlWQb_FxXyl1S/view?usp=sharing"
+                                download
+                                class="bg-emerald-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-emerald-700 transition-colors"
+                                >My CV</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Projects -->
+            <section id="projects" class="py-16">
+                <h2 class="text-3xl font-bold text-center mb-12 text-white">
+                    Featured Projects
+                </h2>
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
+                    <!-- Project Card 1 -->
+                    <div
+                        class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden transform hover:-translate-y-2 transition-transform"
+                    >
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-slate-100">
+                                LoafTrack
+                            </h3>
+                            <p class="text-slate-400 mb-4">
+                                Allows people to spend less time and effort
+                                tracking their food without sacrificing
+                                nutritional accuracy.
+                            </p>
+                            <a
+                                href="[LINK_TO_GITHUB_REPO]"
+                                class="text-emerald-400 font-semibold hover:text-emerald-300"
+                                >View on GitHub &rarr;</a
+                            >
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div
+                        class="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden transform hover:-translate-y-2 transition-transform"
+                    >
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-slate-100">
+                                Multimodal Cancer Risk Analysis
+                            </h3>
+                            <p class="text-slate-400 mb-4">
+                                What AI techniques and modalities can we use to
+                                analyze the risk of cancer patients?
+                            </p>
+                            <a
+                                href="[LINK_TO_GITHUB_REPO]"
+                                class="text-emerald-400 font-semibold hover:text-emerald-300"
+                                >View on GitHub &rarr;</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Publications -->
+            <!-- <section id="publications" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-12 text-white">Publications</h2>
+            <div class="space-y-8 max-w-4xl mx-auto">
+
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg">
+                    <p class="text-slate-400">Author 1, <strong class="text-slate-200">Your Name</strong>, Author 3. (Year). "Title of the Publication." <em>Journal or Conference Name</em>.</p>
+                    <div class="mt-3 space-x-4">
+                        <a href="[LINK_TO_PAPER_PDF]" class="text-emerald-400 font-semibold hover:text-emerald-300">PDF</a>
+                        <a href="[LINK_TO_CODE]" class="text-emerald-400 font-semibold hover:text-emerald-300">Code</a>
+                        <a href="[LINK_TO_PROJECT_PAGE]" class="text-emerald-400 font-semibold hover:text-emerald-300">Project Page</a>
+                    </div>
+                </div>
+
+                 <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg">
+                    <p class="text-slate-400"><strong class="text-slate-200">Your Name</strong>, Author 2, Author 3. (Year). "Title of Another Publication." <em>Journal or Conference Name</em>.</p>
+                    <div class="mt-3 space-x-4">
+                        <a href="[LINK_TO_PAPER_PDF]" class="text-emerald-400 font-semibold hover:text-emerald-300">PDF</a>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+            <!-- Section: Blog -->
+            <section id="blog" class="py-16">
+                <h2 class="text-3xl font-bold text-center mb-12 text-white">
+                    Latest Thoughts
+                </h2>
+                <div class="space-y-8 max-w-4xl mx-auto">
+                    <!-- Blog Post 1 -->
+                    <div
+                        class="bg-slate-800 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
+                    >
+                        <p class="text-sm text-slate-500">July 16, 2025</p>
+                        <h3 class="text-xl font-bold mt-2 text-slate-100">
+                            My First Blog Post
+                        </h3>
+                        <p class="text-slate-400 mt-2">
+                            A short summary or excerpt of your blog post goes
+                            here. You can link to a full post on a platform like
+                            Medium or a separate page.
+                        </p>
+                        <a
+                            href="blog-posts/blog-post-1.html"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mt-4 inline-block"
+                            >Read More &rarr;</a
+                        >
+                    </div>
+                    <!-- Blog Post 2 -->
+                    <!-- <div
+                        class="bg-slate-800 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
+                    >
+                        <p class="text-sm text-slate-500">June 28, 2025</p>
+                        <h3 class="text-xl font-bold mt-2 text-slate-100">
+                            Reflections on My Recent Project
+                        </h3>
+                        <p class="text-slate-400 mt-2">
+                            A short summary or excerpt of your blog post goes
+                            here. You can link to a full post on a platform like
+                            Medium or a separate page.
+                        </p>
+                        <a
+                            href="#"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mt-4 inline-block"
+                            >Read More &rarr;</a
+                        >
+                    </div> -->
+                </div>
+            </section>
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+        <script>
+            // Fetch and insert the header
+            fetch('./header.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.getElementById('header-placeholder').innerHTML =
+                        data;
+                    // Re-attach mobile menu script after header is loaded
+                    const mobileMenuButton =
+                        document.getElementById('mobile-menu-button');
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenuButton) {
+                        mobileMenuButton.addEventListener('click', () => {
+                            mobileMenu.classList.toggle('hidden');
+                        });
+                    }
+                });
+
+            // Fetch and insert the footer
+            fetch('./footer.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.getElementById('footer-placeholder').innerHTML =
+                        data;
+                });
+        </script>
+    </body>
 </html>
