@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>My First Blog Post - Liam Bakar</title>
+        <title>
+            Liam Bakar - What&#39;s the point of sharing your opinions?
+        </title>
 
         <!-- Tailwind CSS -->
         <script src="https://cdn.tailwindcss.com"></script>
@@ -28,84 +30,7 @@
         </style>
     </head>
     <body class="bg-slate-900 text-slate-300 antialiased">
-        <!-- Header & Navigation -->
-        <header
-            class="bg-slate-900/80 backdrop-blur-lg sticky top-0 left-0 right-0 z-10 border-b border-slate-700"
-        >
-            <div
-                class="container mx-auto px-6 py-4 flex justify-between items-center"
-            >
-                <a href="index.html" class="text-xl font-bold text-white"
-                    >Liam Bakar</a
-                >
-                <nav class="hidden md:flex space-x-8">
-                    <a
-                        href="index.html#about"
-                        class="nav-link text-slate-400 hover:text-white"
-                        >About</a
-                    >
-                    <a
-                        href="index.html#projects"
-                        class="nav-link text-slate-400 hover:text-white"
-                        >Projects</a
-                    >
-                    <a
-                        href="index.html#blog"
-                        class="nav-link text-slate-400 hover:text-white"
-                        >Blog</a
-                    >
-                    <a
-                        href="index.html#contact"
-                        class="nav-link text-slate-400 hover:text-white"
-                        >Contact</a
-                    >
-                </nav>
-                <!-- Mobile Menu Button -->
-                <button
-                    id="mobile-menu-button"
-                    class="md:hidden text-slate-300"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <line x1="4" x2="20" y1="12" y2="12" />
-                        <line x1="4" x2="20" y1="6" y2="6" />
-                        <line x1="4" x2="20" y1="18" y2="18" />
-                    </svg>
-                </button>
-            </div>
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-                <a
-                    href="index.html#about"
-                    class="block py-2 nav-link text-slate-400 hover:text-white"
-                    >About</a
-                >
-                <a
-                    href="index.html#projects"
-                    class="block py-2 nav-link text-slate-400 hover:text-white"
-                    >Projects</a
-                >
-                <a
-                    href="index.html#blog"
-                    class="block py-2 nav-link text-slate-400 hover:text-white"
-                    >Blog</a
-                >
-                <a
-                    href="index.html#contact"
-                    class="block py-2 nav-link text-slate-400 hover:text-white"
-                    >Contact</a
-                >
-            </div>
-        </header>
+        <div id="header-placeholder"></div>
 
         <main class="container mx-auto px-6 pt-12 pb-16">
             <!-- Blog Post Content -->
@@ -177,12 +102,11 @@
             </article>
         </main>
 
-        <!-- Footer & Contact -->
         <div id="footer-placeholder"></div>
 
         <script>
             // Fetch and insert the header
-            fetch('header.html')
+            fetch('./html-components/header.html')
                 .then((response) => response.text())
                 .then((data) => {
                     document.getElementById('header-placeholder').innerHTML =
@@ -199,7 +123,7 @@
                 });
 
             // Fetch and insert the footer
-            fetch('footer.html')
+            fetch('./html-components/footer.html')
                 .then((response) => response.text())
                 .then((data) => {
                     document.getElementById('footer-placeholder').innerHTML =
