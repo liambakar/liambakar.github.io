@@ -30,8 +30,6 @@
         </style>
     </head>
     <body class="bg-slate-900 text-slate-300 antialiased">
-        <div id="header-placeholder"></div>
-
         <main class="container mx-auto px-6 pt-12 pb-16">
             <!-- Blog Post Content -->
             <article class="max-w-4xl mx-auto">
@@ -101,34 +99,5 @@
                 </div>
             </article>
         </main>
-
-        <div id="footer-placeholder"></div>
-
-        <script>
-            // Fetch and insert the header
-            fetch('../html-components/header.html')
-                .then((response) => response.text())
-                .then((data) => {
-                    document.getElementById('header-placeholder').innerHTML =
-                        data;
-                    // Re-attach mobile menu script after header is loaded
-                    const mobileMenuButton =
-                        document.getElementById('mobile-menu-button');
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (mobileMenuButton) {
-                        mobileMenuButton.addEventListener('click', () => {
-                            mobileMenu.classList.toggle('hidden');
-                        });
-                    }
-                });
-
-            // Fetch and insert the footer
-            fetch('../html-components/footer.html')
-                .then((response) => response.text())
-                .then((data) => {
-                    document.getElementById('footer-placeholder').innerHTML =
-                        data;
-                });
-        </script>
     </body>
 </html>
