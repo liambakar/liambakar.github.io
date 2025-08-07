@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    class="scroll-smooth"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>LoafTrack</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts: Inter -->
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* Use the Inter font family */
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            /* Add a subtle transition for smooth scrolling and color changes */
+            .nav-link {
+                transition: color 0.3s ease-in-out;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-900 text-slate-300 antialiased">
+        <main class="container mx-auto px-6 pt-12 pb-16">
+            <!-- Blog Post Content -->
+            <article>
+                <div class="max-w-4xl mx-auto">
+                    <header class="pt-4 mb-8">
+                        <a
+                            href="../index.html#blog"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mb-4 inline-block"
+                            >&larr; Back to Main</a
+                        >
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            Exploring Novel Food Tracking Techniques
+                        </h1>
+                        <p class="mt-2 text-sm text-slate-500">In progress</p>
+                    </header>
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        Context
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        In recent years, nutrition has taken center stage in
+                        public health conversations, with approximately 40% of
+                        adults actively trying to lose weight . At the same
+                        time, 2-4% of young adults struggle with clinically
+                        diagnosed eating disorders, underscoring the fine line
+                        between health-conscious behavior and disordered eating.
+                        Eating behavior is further complicated by the fact that
+                        food is not only essential for survival but also deeply
+                        embedded in cultural identity and social relationships,
+                        meaning individuals often lack complete control over
+                        what, when, and how they eat. Nutritional tracking tools
+                        emerged as a way to bring more awareness and structure
+                        to eating habits. The 69% of U.S. adults keeping track
+                        of at least one health indicator (weight, diet, exercise
+                        regimen, or symptom) can now monitor intake, set goals,
+                        and reflect on patterns using modern logging techniques.
+                        However, the effectiveness of these tools depends on
+                        factors such as usability, psychological impact,
+                        long-term sustainability, and the risk of tracking
+                        fatigue, a common phenomenon in which users disengage
+                        due to the effort and mental load of constant
+                        self-monitoring.
+                    </p>
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        Proposed Solution
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        To balance the tradeoff between time-consuming and
+                        inconvenient, manual tracking and innacurate, automated
+                        tracking, I propose using LLMs and a series of AI
+                        context and techniques to improve nutrition tracking.
+                        This allows users to log in a modality of their choosing
+                        (image, text, audio) without sacrificing the accuracy.
+                    </p>
+
+                    <div class="bg-slate-500">
+                        <img
+                            src="../images/LoafTrack.png"
+                            alt="Liam Bakar"
+                            class="object-cover w-full"
+                        />
+                    </div>
+                    <p class="text-justify text-slate-500 pt-4">
+                        The project flow is as follows:
+                    </p>
+                    <ul
+                        class="list-decimal text-slate-500 text-justify list-inside"
+                    >
+                        <li>
+                            The user inputs a free-form log of an unconstrained
+                            modality (image, text, audio)
+                        </li>
+
+                        <li>
+                            We use OpenAI's CLIP model to extract the input
+                            embeddings and use RAG to provide context to the
+                            model
+                        </li>
+                        <li>
+                            We provide the user's previously purchased
+                            ingredients as context
+                        </li>
+                        <li>
+                            We allow the model to ask follow up questions to the
+                            users to gain a wholistic understanding
+                        </li>
+                    </ul>
+
+                    <p class="text-justify text-slate-500 pt-2">
+                        With all this information, and a multimodal instance of
+                        Gemini, we are able to generate more comprehensive and
+                        accurate food logs without requiring the user to do much
+                        work.
+                    </p>
+                </div>
+            </article>
+        </main>
+    </body>
+</html>
