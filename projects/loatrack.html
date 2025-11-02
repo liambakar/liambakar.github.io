@@ -53,98 +53,65 @@
                         <h1 class="text-4xl md:text-5xl font-bold text-white">
                             Exploring Novel Food Tracking Techniques
                         </h1>
-                        <p class="mt-2 text-sm text-slate-500">In progress</p>
+                        <p class="mt-2 text-sm text-slate-500">
+                            In submission...
+                        </p>
                     </header>
-                    <h4 class="text-2xl font-bold dark:text-white pt-2">
-                        Context
-                    </h4>
-                    <p
-                        class="text-justify text-slate-500"
-                        style="text-indent: 30px"
-                    >
-                        In recent years, nutrition has taken center stage in
-                        public health conversations, with approximately 40% of
-                        adults actively trying to lose weight . At the same
-                        time, 2-4% of young adults struggle with clinically
-                        diagnosed eating disorders, underscoring the fine line
-                        between health-conscious behavior and disordered eating.
-                        Eating behavior is further complicated by the fact that
-                        food is not only essential for survival but also deeply
-                        embedded in cultural identity and social relationships,
-                        meaning individuals often lack complete control over
-                        what, when, and how they eat. Nutritional tracking tools
-                        emerged as a way to bring more awareness and structure
-                        to eating habits. The 69% of U.S. adults keeping track
-                        of at least one health indicator (weight, diet, exercise
-                        regimen, or symptom) can now monitor intake, set goals,
-                        and reflect on patterns using modern logging techniques.
-                        However, the effectiveness of these tools depends on
-                        factors such as usability, psychological impact,
-                        long-term sustainability, and the risk of tracking
-                        fatigue, a common phenomenon in which users disengage
-                        due to the effort and mental load of constant
-                        self-monitoring.
-                    </p>
-                    <h4 class="text-2xl font-bold dark:text-white pt-2">
-                        Proposed Solution
-                    </h4>
-                    <p
-                        class="text-justify text-slate-500"
-                        style="text-indent: 30px"
-                    >
-                        To balance the tradeoff between time-consuming and
-                        inconvenient, manual tracking and innacurate, automated
-                        tracking, I propose using LLMs and a series of AI
-                        context and techniques to improve nutrition tracking.
-                        This allows users to log in a modality of their choosing
-                        (image, text, audio) without sacrificing the accuracy.
-                    </p>
-
                     <div class="bg-slate-500">
                         <img
-                            src="../images/LoafTrack.png"
-                            alt="system-design"
+                            src="../images/IMWUT-2025_cropped copy.png"
+                            alt="snappy-meal-image"
                             class="object-cover w-full"
                         />
                     </div>
-                    <p class="text-justify text-slate-500 pt-4">
-                        The project flow is as follows:
-                    </p>
-                    <ul
-                        class="list-decimal text-slate-500 text-justify list-inside"
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        Abstract
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
                     >
-                        <li>
-                            The user inputs a free-form log of an unconstrained
-                            modality (image, text, audio)
-                        </li>
-
-                        <li>
-                            We use OpenAI's CLIP model to extract the input
-                            embeddings and use RAG to provide context to the
-                            model
-                        </li>
-                        <li>
-                            We provide the user's previously purchased
-                            ingredients as context
-                        </li>
-                        <li>
-                            We allow the model to ask follow up questions to the
-                            users to gain a wholistic understanding
-                        </li>
-                    </ul>
-
-                    <p class="text-justify text-slate-500 pt-2">
-                        With all this information, and a multimodal instance of
-                        Gemini, we are able to generate more comprehensive and
-                        accurate food logs without requiring the user to do much
-                        work.
+                        Food logging, both self-directed and prescribed, plays a
+                        critical role in uncovering correlations between diet,
+                        medical, fitness, and health outcomes. Through
+                        conversations with nutritional experts and individuals
+                        who practice dietary tracking, we find current logging
+                        methods, such as handwritten and app-based journaling,
+                        are inflexible and result in low adherence and
+                        potentially inaccurate nutritional summaries. These
+                        findings, corroborated by prior literature, emphasize
+                        the urgent need for improved food logging methods. In
+                        response, we propose SnappyMeal, an AI-powered dietary
+                        tracking system that leverages multimodal inputs to
+                        enable users to more flexibly log their food intake.
+                        SnappyMeal introduces goal-dependent follow-up questions
+                        to intelligently seek missing context from the user and
+                        information retrieval from user grocery receipts and
+                        nutritional databases to improve accuracy. We evaluate
+                        SnappyMeal through publicly available nutrition
+                        benchmarks and a multi-user, 3-week, in-the-wild
+                        deployment capturing over 500 logged food instances.
+                        Users strongly praised the multiple available input
+                        methods and reported a strong perceived accuracy. These
+                        insights suggest that multimodal AI systems can be
+                        leveraged to significantly improve dietary tracking
+                        flexibility and context-awareness, laying the groundwork
+                        for a new class of intelligent self-tracking
+                        applications.
                     </p>
+                    <div class="bg-slate-500">
+                        <img
+                            src="../images/SystemDiagram.png"
+                            alt="snappy-meal-image"
+                            class="object-cover w-full"
+                        />
+                    </div>
                     <p
                         class="text-justify text-slate-500 pt-2"
                         style="text-indent: 30px"
                     >
                         Here are some screenshots from the working app! (with
-                        fake data)
+                        fake data and when it had a different name)
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 mt-4">
                         <img
@@ -168,6 +135,16 @@
                             class="object-cover w-full sm:w-1/2 md:w-1/4 lg:w-1/5"
                         />
                     </div>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        Liam Bakar, Zachary Englhardt, Vidya Srinivas, Girish
+                        Narayanswamy, Dilini Nissanka, Shwetak Patel, Vikram
+                        Iyer. SnappyMeal: Design and Longitudinal Evaluation of
+                        a Multimodal AI Food Logging Application - (In
+                        submission for IMWUT'26)
+                    </p>
                 </div>
             </article>
         </main>
