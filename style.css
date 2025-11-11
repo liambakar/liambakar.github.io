@@ -1,0 +1,63 @@
+/* Basic body styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+.carousel-wrapper {
+    display: flex; /* This aligns items in a row */
+    align-items: center; /* This vertically centers the buttons */
+    justify-content: center; /* This centers the whole component on the page */
+    width: 90%; /* Adjust as needed */
+}
+/* The main container */
+.carousel-container {
+    width: 80%;
+    max-width: 300px; /* <--- THIS IS THE LINE TO CHANGE */
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* The "track" that holds all images */
+.carousel-slide {
+    display: flex; /* Lines up images horizontally */
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Each image */
+.carousel-slide img {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Styling for the next/prev buttons */
+.carousel-btn {
+    /* DELETE ALL OF THESE LINES:
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    */
+
+    /* Keep these styles */
+    background-color: rgba(9, 22, 106, 0.7);
+    border: 1px solid #ccc; /* Add a border so they are visible */
+    font-size: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+
+    /* ADD a margin for spacing */
+    margin: 0 10px;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.32);
+}

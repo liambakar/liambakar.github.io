@@ -28,6 +28,10 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="../style.css"
+        />
 
         <style>
             /* Use the Inter font family */
@@ -113,28 +117,45 @@
                         Here are some screenshots from the working app! (with
                         fake data and when it had a different name)
                     </p>
-                    <div class="flex flex-wrap justify-center gap-4 mt-4">
-                        <img
-                            src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.25.30.png"
-                            alt="LoafTrack Screenshot 1"
-                            class="object-cover w-full sm:w-1/2 md:w-1/4 lg:w-1/5"
-                        />
-                        <img
-                            src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.38.04.png"
-                            alt="LoafTrack Screenshot 2"
-                            class="object-cover w-full sm:w-1/2 md:w-1/4 lg:w-1/5"
-                        />
-                        <img
-                            src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.38.17.png"
-                            alt="LoafTrack Screenshot 3"
-                            class="object-cover w-full sm:w-1/2 md:w-1/4 lg:w-1/5"
-                        />
-                        <img
-                            src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.38.24.png"
-                            alt="LoafTrack Screenshot 4"
-                            class="object-cover w-full sm:w-1/2 md:w-1/4 lg:w-1/5"
-                        />
+                    <div class="carousel-wrapper">
+                        <button
+                            class="carousel-btn btn-prev"
+                            id="prevBtn"
+                        >
+                            <--
+                        </button>
+                        <div
+                            class="carousel-container flex flex-wrap justify-center gap-4 mt-4"
+                        >
+                            <div class="carousel-slide">
+                                <img
+                                    src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.38.04.png"
+                                    alt="SnappyMeal 1"
+                                />
+                                <img
+                                    src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.25.30.png"
+                                    alt="SnappyMeal 2"
+                                />
+                                <img
+                                    src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.38.17.png"
+                                    alt="SnappyMeal 3"
+                                />
+                                <img
+                                    src="../images/Simulator Screenshot - iPhone 16 Pro - 2025-08-08 at 10.38.24.png"
+                                    alt="SnappyMeal 4"
+                                />
+                            </div>
+                        </div>
+                        <button
+                            class="carousel-btn btn-next"
+                            id="nextBtn"
+                        >
+                            -->
+                        </button>
                     </div>
+
+                    <script src="../script.js"></script>
+
                     <p
                         class="text-justify text-slate-500"
                         style="text-indent: 30px"
