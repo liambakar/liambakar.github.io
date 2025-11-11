@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    class="scroll-smooth"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>pics :) - Liam Bakar</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts: Inter -->
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="../style.css"
+        />
+
+        <style>
+            /* Use the Inter font family */
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            /* Add a subtle transition for smooth scrolling and color changes */
+            .nav-link {
+                transition: color 0.3s ease-in-out;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-900 text-slate-300 antialiased">
+        <main class="container mx-auto px-6 pt-12 pb-16">
+            <!-- Blog Post Content -->
+            <article>
+                <div class="max-w-4xl mx-auto">
+                    <header class="pt-4 mb-8">
+                        <a
+                            href="../index.html#blog"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mb-4 inline-block"
+                            >&larr; Back to Main</a
+                        >
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            pics :)
+                        </h1>
+                        <p class="mt-2 text-sm text-slate-500">
+                            try to update frequently
+                        </p>
+                        <div
+                            class="masonry-container"
+                            id="gallery"
+                        ></div>
+
+                        <script src="image-list.js"></script>
+                        <script src="build-gallery.js"></script>
+                    </header>
+                </div>
+            </article>
+        </main>
+    </body>
+</html>

@@ -61,3 +61,46 @@ body {
 .carousel-btn:hover {
     background-color: rgba(255, 255, 255, 0.32);
 }
+.masonry-container {
+    /* Tell the browser to create 3 columns */
+    column-count: 3;
+
+    /* Set the space (gutter) between columns */
+    column-gap: 15px;
+}
+
+/* * We'll wrap each image in a 'div' (see JS step).
+ * This 'break-inside' is the *most important rule*.
+ * It tells the browser: "Do not cut an image in half
+ * or split it across two columns."
+ */
+.grid-item {
+    break-inside: avoid;
+    margin-bottom: 15px; /* Space *under* each image */
+    display: block;
+}
+
+.grid-item img {
+    /* Make the image fill its container */
+    width: 100%;
+
+    /* Let the height be automatic to keep the aspect ratio */
+    height: auto;
+
+    /* Just to prevent layout quirks */
+    display: block;
+    border-radius: 5px;
+}
+
+/* Make it responsive for smaller screens */
+@media (max-width: 900px) {
+    .masonry-container {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .masonry-container {
+        column-count: 1;
+    }
+}
