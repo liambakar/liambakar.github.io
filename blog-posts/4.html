@@ -1,0 +1,431 @@
+<!doctype html>
+<html
+    lang="en"
+    class="scroll-smooth"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Game Theory IRL - Liam Bakar</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts: Inter -->
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* Use the Inter font family */
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+
+            .matrix-table {
+                border-collapse: collapse;
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Labels */
+            .partner-label {
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+
+            .choice-label {
+                color: #ffb7b2; /* Soft pink */
+                font-size: 1.1em;
+                padding-bottom: 10px;
+            }
+
+            /* Grid lines */
+            .cell {
+                border: 2px solid #ffffff;
+                padding: 20px;
+                width: 40%;
+                height: 120px;
+                vertical-align: middle;
+            }
+
+            .score {
+                display: block;
+                margin-top: 10px;
+                color: #f5b2ff;
+                font-weight: bold;
+            }
+
+            .negative-score {
+                color: #f02828; /* Reddish for negative outcomes */
+            }
+            .side-title {
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+                padding: 10px;
+                text-align: center;
+            }
+
+            .note {
+                margin-top: 30px;
+                text-align: center;
+                font-size: 1.1em;
+                border-top: 2px solid #ffffff;
+                padding-top: 15px;
+            }
+
+            /* Decorative Hearts */
+            .heart {
+                position: absolute;
+                color: #ffb7b2;
+                font-size: 1.5em;
+            }
+
+            /* Add a subtle transition for smooth scrolling and color changes */
+            .nav-link {
+                transition: color 0.3s ease-in-out;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-900 text-slate-300 antialiased">
+        <main class="container mx-auto px-6 pt-12 pb-16">
+            <!-- Blog Post Content -->
+            <article>
+                <div class="max-w-4xl mx-auto">
+                    <header class="pt-4 mb-8">
+                        <a
+                            href="../index.html#blog"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mb-4 inline-block"
+                            >&larr; Back to Main</a
+                        >
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            Game Theory IRL
+                        </h1>
+                        <p class="mt-2 text-sm text-slate-500">
+                            Published on February 5, 2026
+                        </p>
+                    </header>
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        Introduction
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        Game theory, the mathematical study of strategic
+                        decision-making among rational agents, has applications
+                        in various academic domains such as economics, politics,
+                        statistics, and biology. To provide brief context, I
+                        will define some terms as well as some types of games:
+                    </p>
+                    <ul
+                        class="list-disc text-justify list-inside text-slate-500 pt-4 pb-4"
+                    >
+                        <li><b>Players:</b> Decision-makers.</li>
+                        <li>
+                            <b>Strategies:</b>
+                            Possible actions a player can take.
+                        </li>
+                        <li>
+                            <b>Payoffs:</b>
+                            Outcomes or rewards resulting from combinations of
+                            strategies
+                        </li>
+                        <li>
+                            <b>Cooperative games</b> focus on group outcomes,
+                            while <b>non-cooperative games</b> analyze
+                            individual strategies.
+                        </li>
+                        <li>
+                            <b>Simultaneous games</b> involve players acting at
+                            the same time or without knowledge of others'
+                            actions (e.g., Rock-Paper-Scissors) while
+                            <b>sequential games</b>
+                            involve turn-based moves where subsequent players
+                            can observe previous actions (e.g., Chess).
+                        </li>
+                        <li>
+                            <b>One-shot games</b> are single, isolated
+                            interactions where players maximize immediate payoff
+                            without concern for future consequences.
+                            <b>Repeated games</b> involve playing the same game
+                            multiple times, allowing for reputation building,
+                            retribution, and cooperation.
+                        </li>
+                        <li>
+                            <b>Zero-sum games</b> means one person's gain must
+                            equal another's loss, (e.g., poker), while
+                            <b>non-zero-sum games</b> allow for mutual gain or
+                            mutual loss, (e.g.,
+                            <a
+                                href="https://cs.stanford.edu/people/eroberts/courses/soco/projects/1998-99/game-theory/nonzero.html"
+                                class="text-emerald-400 underline hover:text-emerald-300"
+                                >Battle of the Sexes</a
+                            >) meaning the total outcome isn't fixed.
+                        </li>
+                        <li>
+                            <b>Nash Equilibrium:</b> A stable state where all
+                            participants are making their best possible decision
+                            based on the choices of their opponents. Think the
+                            sweet spot!
+                        </li>
+                    </ul>
+                    <p class="text-justify text-slate-500">
+                        Now that you have enough game theory knowledge to pass
+                        the intro course, we can get into our main subjects.
+                    </p>
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        Game Theory in CS
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        If you are involved in computer science fields, such as
+                        myself, you probably recognize game theory from models
+                        such as GANs. Generative Adversarial Networks (GAN)
+                        consist of two neural networks: a generator creating
+                        fake data, and a discriminator trying to spot the fakes.
+                        They are in a constant,
+                        <i>simultaneous, zero-sum</i> game against each other.
+                        Ideally, once training is complete, the models would
+                        reach a <i>Nash Equilibrium</i> where the generator
+                        produces data indistinguishable from real data, making
+                        the discriminator's accuracy 50% (random guessing). This
+                        adversarial process drives both networks to improve
+                        rapidly, leading to realistic AI-generated images.
+                        Another example is self-driving cars navigating traffic.
+                        Each car's AI needs to predict and react to the
+                        movements of other AI-driven or human-driven vehicles.
+                        This naturally brings many
+                        <a
+                            href="https://hai.stanford.edu/news/designing-ethical-self-driving-cars"
+                            class="text-emerald-400 underline hover:text-emerald-300"
+                            >ethical conversations</a
+                        >
+                        to mind, but that's for another time. By solving for
+                        Nash Equilibria in real-time, autonomous vehicles can
+                        predict traffic, negotiate merges, and execute complex
+                        maneuvers like yielding or overtaking. This is all nice
+                        and dandy, but in the real world, we can't model
+                        everything... or can we?
+                    </p>
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        Game Theory in Real Life
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        You might be surprised how often you encounter game
+                        theory without even realizing it. Every time you make a
+                        decision that considers someone else's potential
+                        response, you're dabbling in game theory. Imagine you're
+                        on your morning commute. Do you take the main highway,
+                        which is usually faster but prone to heavy traffic, or
+                        the longer scenic route with less congestion? Your
+                        decision isn't just about your own preference; it
+                        depends on what other drivers choose to do. If everyone
+                        avoids the highway, it becomes the faster option.
+                    </p>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        However, when we defined game theory, we said the
+                        players or agents are rational. It's widely accepted
+                        that
+                        <a
+                            href="https://hsph.harvard.edu/news/qa-the-science-of-irrationality/"
+                            class="text-emerald-400 underline hover:text-emerald-300"
+                        >
+                            humans are irrational</a
+                        >. The above examples assume players are rational, that
+                        they always act to maximize their own clear benefit.
+                        However, humans are messy and emotional. We don't just
+                        care about payoffs such as money or efficiency; we care
+                        about fairness, spite, love, revenge, and reputation.
+                        Now, we enter the realm of Behavioral Game Theory.
+                        Nowhere is this assumption of rationality tested more
+                        than in our social lives. In relationships, the "payoff"
+                        isn't just objective gain; it includes complex emotional
+                        states. Imagine a stranger is given $100 and has to
+                        offer you a portion of it. If you accept the offer, you
+                        both keep the agreed amounts. If you reject it, nobody
+                        gets anything. A purely "rational" person should accept
+                        even $1, because $1 is better than nothing. Yet, in
+                        real-life experiments, people routinely reject offers
+                        below 30% because it feels "unfair." They are willing to
+                        suffer a personal loss just to punish the other person
+                        for being greedy. In social conflicts, we often take
+                        actions that hurt ourselves just to hurt the other party
+                        more out of anger or spite. Similarly, in romantic or
+                        deep platonic relationships, standard game theory often
+                        breaks down.
+                    </p>
+                    <div class="container pt-4">
+                        <table class="matrix-table">
+                            <tr>
+                                <td colspan="2"></td>
+                                <td
+                                    colspan="2"
+                                    class="partner-label"
+                                >
+                                    Partner 2's Choice:
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="choice-label">
+                                    Give More<br />(Sacrifice)
+                                </td>
+                                <td class="choice-label">
+                                    Take More<br />(Selfish)
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td
+                                    rowspan="2"
+                                    class="partner-label side-title"
+                                >
+                                    Partner 1's Choice:
+                                </td>
+                                <td class="choice-label">
+                                    Give More<br />(Sacrifice)
+                                </td>
+                                <td class="cell">
+                                    Deep Bonding & Shared Happiness
+                                    <span class="score"
+                                        >(Score: &infin;, &infin;)</span
+                                    >
+                                </td>
+                                <td class="cell">
+                                    Feelings of Devotion & Guilt/Shallow Comfort
+                                    <span class="score">(Score: +5, -2)</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="choice-label">
+                                    Take More<br />(Selfish)
+                                </td>
+                                <td class="cell">
+                                    Guilt/Shallow Comfort & Feelings of Devotion
+                                    <span class="score">(Score: -2, +5)</span>
+                                </td>
+                                <td class="cell">
+                                    Resentment & Disconnect
+                                    <span class="score negative-score"
+                                        >(Score: -10, -10)</span
+                                    >
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p
+                        class="text-justify text-slate-500 pt-4"
+                        style="text-indent: 30px"
+                    >
+                        We frequently perform acts of pure altruism, sacrificing
+                        our own immediate well-being for our partner's happiness
+                        without calculating an immediate return. Why? Because in
+                        the long "game" of a relationship, the payoff function
+                        changes. The other person's happiness becomes part of
+                        your own payoff. Furthermore, emotions like guilt,
+                        shame, and love act as powerful internal enforcers of
+                        cooperative behavior, preventing us from defecting on
+                        our partners even when we could get away with it.
+                    </p>
+                    <h4 class="text-2xl font-bold dark:text-white pt-2">
+                        My Unsolicited Two Cents
+                    </h4>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        Game theory shouldn't be used to "win" a relationship;
+                        it should be used to design the environment so that
+                        "winning" becomes irrelevant. In traditional game
+                        theory, we analyze a game to find the strategy that
+                        maximizes our own payoff. In a relationship, if you find
+                        yourself calculating Nash Equilibria, you've already
+                        lost. If you're calculating Nash Equilibria about your
+                        loved ones, the "game" has shifted from
+                        <i>Cooperative</i> to <i>Non-Cooperative</i>. Most
+                        people view relationships through the lens of a
+                        <i>one-shot game</i> (like a single argument or a choice
+                        of where to eat). However, a healthy relationship is an
+                        iterated or <i>repeated game</i> with an unknown end
+                        date. The most successful social relationships are those
+                        where the players intentionally "break" their own
+                        rationality. Use game theory not as a playbook, but as a
+                        thermometer. If you and your partner are in a
+                        <a
+                            href="https://en.wikipedia.org/wiki/Prisoner%27s_dilemma"
+                            class="text-emerald-400 underline hover:text-emerald-300"
+                            >"Prisoner's Dilemma"</a
+                        >
+                        (where both being selfish is the "logical" choice but
+                        leads to the worst outcome), game theory helps you see
+                        the trap. It helps you realize that if you punish your
+                        partner for being honest, you are effectively
+                        "incentivizing" them to lie in the next round of the
+                        game. It reveals when one person has more "information"
+                        than the other, creating an imbalance that leads to
+                        anxiety rather than trust.
+                    </p>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        If you optimize for your own payoff, you eventually turn
+                        your partner into an opponent. Once you treat a partner
+                        as a variable to be managed rather than a person to be
+                        known, the "emotional payoff" of the relationship drops
+                        to zero. Game theory requires a "Utility Function," a
+                        way to score a win. But how do you score the "utility"
+                        of a quiet morning or a shared laugh? If you can't
+                        measure it accurately, your model is built on sand. In a
+                        cold, mathematical world, vulnerability is a weakness
+                        that can be exploited. In a relationship, vulnerability
+                        is the only mechanism that builds the "Infinite Loop" of
+                        trust. You should use game theory to understand the
+                        mechanics of conflict, but you should never use it to
+                        govern the mechanics of connection. Think of game theory
+                        like a map of the ocean: it's great for seeing where the
+                        dangerous whirlpools are, but it's a terrible way to
+                        learn how to swim. To truly connect, you eventually have
+                        to put the map down and get wet.
+                    </p>
+                    <p
+                        class="text-justify text-slate-500 pt-4"
+                        style="text-indent: 30px"
+                    >
+                        With lots of love,
+                    </p>
+                    <p
+                        class="text-justify text-slate-500"
+                        style="text-indent: 30px"
+                    >
+                        Liamo
+                    </p>
+                </div>
+            </article>
+        </main>
+    </body>
+</html>
