@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>URL Display</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body
+        class="bg-slate-900 text-white flex items-center justify-center h-screen overflow-hidden"
+    >
+        <div class="text-center px-4">
+            <h1 class="text-2xl md:text-4xl font-bold mb-4 text-slate-400">
+                This is your URL:
+            </h1>
+            <p
+                id="url-display"
+                class="text-xl md:text-3xl font-mono text-emerald-400 break-all mb-6"
+            ></p>
+            <button
+                onclick="copyUrl()"
+                class="bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-2 px-6 rounded-lg transition-colors duration-200"
+            >
+                Copy URL
+            </button>
+        </div>
+
+        <script>
+            document.getElementById('url-display').textContent =
+                window.location.href;
+
+            function copyUrl() {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    const btn = document.querySelector('button');
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    btn.classList.replace('bg-emerald-500', 'bg-white');
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.replace('bg-white', 'bg-emerald-500');
+                    }, 2000);
+                });
+            }
+        </script>
+            </h1>
+            <p
+                id="url-display"
+                class="text-xl md:text-3xl font-mono text-emerald-400 break-all"
+            ></p>
+        </div>
+
+        <script>
+            document.getElementById('url-display').textContent =
+                window.location.href;
+        </script>
+    </body>
+</html>
