@@ -29,6 +29,15 @@
             rel="stylesheet"
         />
 
+        <link
+            rel="stylesheet"
+            href="./scroll-effects.css"
+        />
+        <script
+            src="./scroll-effects.js"
+            defer
+        ></script>
+
         <style>
             /* Use the Inter font family */
             body {
@@ -63,15 +72,12 @@
                             Hi, I'm Liam
                         </h1>
                         <p class="mt-4 text-lg text-slate-400">
-                            As a master's student at the University of
-                            Washington, I focus on the intersection of
-                            human-centered AI and healthcare. I'm driven by two
-                            key questions: How can we use AI, especially LLMs,
-                            to build tools that enhance our health? And how do
-                            we ensure our interactions with these technologies
-                            are themselves healthy and beneficial? My ultimate
-                            goal is to apply my skills to build systems that
-                            make a meaningful difference in people's lives.
+                            I'm a PhD student at the University of Cambridge,
+                            working at the intersection of human-centered AI and
+                            healthcare. My research spans language models,
+                            multimodal sensing, and personalized health
+                            technologies, with a focus on making AI both
+                            effective and healthy to interact with.
                         </p>
                         <div class="mt-8 flex space-x-4">
                             <a
@@ -90,43 +96,44 @@
                 class="py-16"
             >
                 <h2 class="text-3xl font-bold text-center mb-12 text-white">
-                    My Interests
+                    Research Interests
                 </h2>
-                <div class="space-y-8 max-w-4xl mx-auto">
-                    <h3 class="mt-4 text-lg text-slate-400 font-bold">
-                        AI & Technology
-                    </h3>
-                    <ul class="list-disc text-justify list-inside">
-                        <li>
-                            <b>Human-Centered AI</b> tools that prioritize human
-                            needs, ethics, and well-being.
-                        </li>
-                        <li>
-                            <b>Personalized Recommendation Systems</b>
-                            and the use of embeddings to represent complex
-                            relationships.
-                        </li>
-                        <li>
-                            <b>Applied Large Language Models</b>
-                            in domains from content creation and data analysis
-                            to conversational interfaces.
-                        </li>
-                    </ul>
-                    <h3 class="mt-4 text-lg text-slate-400 font-bold">
-                        Healthcare
-                    </h3>
-                    <ul class="list-disc text-justify list-inside">
-                        <li>
-                            <b>Enriching sparse medical records</b> by
-                            transforming unstructured daily logs into actionable
-                            clinical insights.
-                        </li>
-                        <li>
-                            <b>Predicting health outcomes</b> using
-                            physiological and behavioral signals from digital
-                            phenotyping.
-                        </li>
-                    </ul>
+                <div class="grid gap-6 max-w-5xl mx-auto md:grid-cols-3">
+                    <article
+                        class="bg-slate-800/60 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
+                    >
+                        <h3 class="text-lg text-slate-100 font-bold">
+                            Human-Centered AI
+                        </h3>
+                        <p class="mt-3 text-slate-400">
+                            Designing intelligent systems that prioritize human
+                            agency well-being.
+                        </p>
+                    </article>
+                    <article
+                        class="bg-slate-800/60 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
+                    >
+                        <h3 class="text-lg text-slate-100 font-bold">
+                            AI for Health
+                        </h3>
+                        <p class="mt-3 text-slate-400">
+                            Turning patient-generated, physiological, and
+                            behavioral data into useful insights for people and
+                            clinicians.
+                        </p>
+                    </article>
+                    <article
+                        class="bg-slate-800/60 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
+                    >
+                        <h3 class="text-lg text-slate-100 font-bold">
+                            Multimodal Intelligent Systems
+                        </h3>
+                        <p class="mt-3 text-slate-400">
+                            Combining language models, sensing, and
+                            personalization to understand real-world health
+                            context.
+                        </p>
+                    </article>
                 </div>
             </section>
 

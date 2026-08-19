@@ -1,0 +1,375 @@
+/* Progressive scroll enhancements for the home page. */
+:root {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+    overflow-x: clip;
+}
+
+body {
+    position: relative;
+    overflow-x: clip;
+}
+
+main,
+#footer-placeholder {
+    position: relative;
+    z-index: 1;
+}
+
+#header-placeholder {
+    position: relative;
+    z-index: 40;
+}
+
+section,
+footer {
+    scroll-margin-top: 6rem;
+}
+
+.polyhedron-stage {
+    --polyhedron-eye: 50vh;
+    perspective: 1400px;
+    perspective-origin: 50% var(--polyhedron-eye);
+    transform-style: preserve-3d;
+}
+
+.polyhedron-face {
+    --face-depth: 0px;
+    --face-rotation: 0deg;
+    --face-origin: center;
+    position: relative;
+    isolation: isolate;
+    margin-block: 1.25rem;
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+    border: 1px solid rgb(51 65 85 / 0.7);
+    border-radius: 1.25rem;
+    background:
+        linear-gradient(
+            145deg,
+            rgb(30 41 59 / 0.66),
+            rgb(15 23 42 / 0.34) 58%,
+            rgb(6 78 59 / 0.1)
+        ),
+        rgb(15 23 42 / 0.32);
+    box-shadow:
+        0 24px 70px rgb(2 6 23 / 0.22),
+        inset 0 1px 0 rgb(255 255 255 / 0.025);
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, var(--face-depth))
+        rotateX(var(--face-rotation));
+    transform-origin: 50% var(--face-origin);
+    transform-style: preserve-3d;
+}
+
+.polyhedron-face::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(
+        115deg,
+        rgb(52 211 153 / 0.18),
+        transparent 35%,
+        rgb(94 234 212 / 0.1)
+    );
+    opacity: var(--face-sheen, 0);
+}
+
+.polyhedron-face::after {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    right: 1.25rem;
+    bottom: -10px;
+    left: 1.25rem;
+    height: 10px;
+    border-radius: 0 0 0.75rem 0.75rem;
+    background: linear-gradient(
+        180deg,
+        rgb(16 185 129 / 0.22),
+        rgb(2 6 23 / 0.68)
+    );
+    transform: rotateX(-78deg);
+    transform-origin: top;
+}
+
+.polyhedron-face.is-transforming {
+    will-change: transform;
+}
+
+.scroll-ambient {
+    position: fixed;
+    z-index: 0;
+    inset: -20vh -15vw;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 16% 18%,
+            rgb(16 185 129 / 0.1),
+            transparent 24rem
+        ),
+        radial-gradient(
+            circle at 88% 70%,
+            rgb(20 184 166 / 0.07),
+            transparent 28rem
+        );
+    transform: translate3d(0, var(--ambient-shift, -20px), 0);
+    will-change: transform;
+}
+
+.scroll-data-field {
+    position: fixed;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    contain: strict;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 2%,
+        black 18%,
+        black 88%,
+        transparent 100%
+    );
+    transition: opacity 180ms linear;
+    will-change: opacity;
+}
+
+.scroll-data-field svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.data-signal,
+.data-network path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+}
+
+.data-signal {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    will-change: stroke-dashoffset;
+}
+
+.data-signal--primary {
+    stroke: rgb(52 211 153 / 0.72);
+    stroke-width: 1.2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+}
+
+.data-signal--ghost {
+    stroke: rgb(94 234 212 / 0.34);
+    stroke-width: 0.85;
+    stroke-dasharray: 0.018 0.012;
+    stroke-dashoffset: 0;
+}
+
+.data-network {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.data-network path {
+    stroke: rgb(52 211 153 / 0.34);
+    stroke-width: 0.85;
+}
+
+.data-network circle {
+    fill: rgb(94 234 212 / 0.62);
+    stroke: rgb(15 23 42 / 0.72);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.scroll-progress {
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    pointer-events: none;
+    background: linear-gradient(90deg, #10b981, #5eead4);
+    box-shadow: 0 0 14px rgb(52 211 153 / 0.65);
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
+}
+
+.motion-enhanced .scroll-reveal {
+    --reveal-x: 0px;
+    --reveal-y: 28px;
+    --reveal-scale: 0.985;
+    opacity: 0;
+    filter: blur(8px);
+    transform: translate3d(
+            var(--reveal-x),
+            calc(var(--reveal-y) + var(--parallax-y, 0px)),
+            0
+        )
+        scale(var(--reveal-scale));
+    transition:
+        opacity 700ms var(--ease-out-expo),
+        transform 900ms var(--ease-out-expo),
+        filter 700ms var(--ease-out-expo),
+        border-color 300ms ease,
+        box-shadow 400ms ease;
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform, filter;
+}
+
+.motion-enhanced .scroll-reveal[data-reveal='left'] {
+    --reveal-x: -26px;
+    --reveal-y: 0px;
+}
+
+.motion-enhanced .scroll-reveal.is-visible {
+    --reveal-x: 0px;
+    --reveal-y: 0px;
+    --reveal-scale: 1;
+    opacity: 1;
+    filter: blur(0);
+    will-change: auto;
+}
+
+.scroll-portrait {
+    position: relative;
+    isolation: isolate;
+}
+
+.scroll-portrait::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -12px;
+    border: 1px solid rgb(52 211 153 / 0.22);
+    border-radius: 9999px;
+    background: rgb(16 185 129 / 0.06);
+    box-shadow: 0 0 42px rgb(16 185 129 / 0.12);
+    opacity: 0;
+    transform: scale(0.9);
+    transition:
+        opacity 800ms var(--ease-out-expo) 180ms,
+        transform 1000ms var(--ease-out-expo) 180ms;
+}
+
+.scroll-portrait.is-visible::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.scroll-section-title {
+    position: relative;
+    width: fit-content;
+    margin-inline: auto;
+}
+
+.scroll-section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.8rem;
+    width: 2.75rem;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #10b981, #5eead4);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 850ms var(--ease-out-expo) 180ms;
+}
+
+.scroll-section-title.is-visible::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.polished-card.is-visible {
+    box-shadow: 0 16px 42px rgb(2 6 23 / 0.14);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .motion-enhanced .polished-card.is-visible:hover {
+        transform: translate3d(0, -4px, 0);
+        box-shadow:
+            0 22px 52px rgb(2 6 23 / 0.28),
+            0 0 0 1px rgb(16 185 129 / 0.08);
+    }
+}
+
+.nav-link {
+    background-image: linear-gradient(#34d399, #34d399);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    transition:
+        color 250ms ease,
+        background-size 400ms var(--ease-out-expo);
+}
+
+.nav-link.is-active {
+    color: #6ee7b7;
+    background-size: 100% 1px;
+}
+
+@media (max-width: 767px) {
+    .polyhedron-stage {
+        perspective: 950px;
+    }
+
+    .polyhedron-face {
+        margin-block: 0.875rem;
+        padding-inline: 1.25rem;
+        border-radius: 1rem;
+    }
+
+    .motion-enhanced .scroll-reveal {
+        --reveal-y: 18px;
+        filter: blur(5px);
+    }
+
+    .scroll-ambient {
+        inset: -10vh -40vw;
+        opacity: 0.8;
+    }
+
+    .scroll-data-field {
+        mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black 24%,
+            black 90%,
+            transparent
+        );
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    .scroll-progress,
+    .scroll-ambient,
+    .scroll-data-field {
+        display: none;
+    }
+
+    .polyhedron-face,
+    .scroll-reveal,
+    .scroll-reveal::before,
+    .scroll-reveal::after,
+    .nav-link {
+        opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
