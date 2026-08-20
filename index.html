@@ -1,3 +1,5 @@
+---
+---
 <!doctype html>
 <html
     lang="en"
@@ -296,6 +298,27 @@
                     Latest Thoughts
                 </h2>
                 <div class="space-y-8 max-w-4xl mx-auto">
+                    {% for post in site.posts limit: 4 %}
+                    <div
+                        class="bg-slate-800 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
+                    >
+                        <p class="text-sm text-slate-500">
+                            {{ post.date | date: "%B %-d, %Y" }}
+                        </p>
+                        <h3 class="text-xl font-bold mt-2 text-slate-100">
+                            {{ post.title | escape }}
+                        </h3>
+                        <p class="text-slate-400 mt-2">
+                            {{ post.description | default: post.excerpt |
+                            strip_html | truncatewords: 32 }}
+                        </p>
+                        <a
+                            href="{{ post.url | relative_url }}"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mt-4 inline-block"
+                            >Read More &rarr;</a
+                        >
+                    </div>
+                    {% endfor %}
                     <div
                         class="bg-slate-800 border border-slate-700 p-6 rounded-lg hover:border-emerald-500 transition-colors"
                     >
@@ -370,6 +393,15 @@
                             >Read More &rarr;</a
                         >
                     </div>
+                    {% if site.posts.size > 0 %}
+                    <div class="text-center pt-2">
+                        <a
+                            href="{{ '/blog/' | relative_url }}"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300"
+                            >View all Markdown posts &rarr;</a
+                        >
+                    </div>
+                    {% endif %}
                 </div>
             </section>
         </main>

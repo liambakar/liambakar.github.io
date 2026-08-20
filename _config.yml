@@ -1,0 +1,16 @@
+title: Liam Bakar
+description: Personal website and writing by Liam Bakar.
+url: "https://liambakar.github.io"
+baseurl: ""
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+permalink: /blog/:year/:month/:day/:title/
+
+exclude:
+  - CMS_SETUP.md
+  - Gemfile
+  - Gemfile.lock

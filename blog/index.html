@@ -1,0 +1,78 @@
+---
+title: Blog
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Writing and notes from Liam Bakar."
+        />
+        <title>Blog - Liam Bakar</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-900 text-slate-300 antialiased">
+        <main class="container mx-auto max-w-4xl px-6 py-12">
+            <header class="mb-12">
+                <a
+                    href="{{ '/#blog' | relative_url }}"
+                    class="text-emerald-400 font-semibold hover:text-emerald-300"
+                    >&larr; Back to Main</a
+                >
+                <h1 class="mt-6 text-4xl md:text-5xl font-bold text-white">
+                    Blog
+                </h1>
+                <p class="mt-4 text-slate-400">
+                    Notes, essays, and things I have been thinking about.
+                </p>
+            </header>
+
+            {% if site.posts.size > 0 %}
+            <div class="space-y-6">
+                {% for post in site.posts %}
+                <article
+                    class="rounded-lg border border-slate-700 bg-slate-800 p-6 transition-colors hover:border-emerald-500"
+                >
+                    <p class="text-sm text-slate-500">
+                        {{ post.date | date: "%B %-d, %Y" }}
+                    </p>
+                    <h2 class="mt-2 text-2xl font-bold text-slate-100">
+                        <a
+                            href="{{ post.url | relative_url }}"
+                            class="hover:text-emerald-300"
+                            >{{ post.title | escape }}</a
+                        >
+                    </h2>
+                    <p class="mt-3 text-slate-400">
+                        {{ post.description | default: post.excerpt |
+                        strip_html | truncatewords: 38 }}
+                    </p>
+                    <a
+                        href="{{ post.url | relative_url }}"
+                        class="mt-4 inline-block font-semibold text-emerald-400 hover:text-emerald-300"
+                        >Read More &rarr;</a
+                    >
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="rounded-lg border border-slate-700 bg-slate-800 p-6">
+                New posts will appear here after they are published.
+            </p>
+            {% endif %}
+        </main>
+    </body>
+</html>

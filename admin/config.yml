@@ -1,0 +1,97 @@
+# GitHub Pages can host this admin interface, but it cannot keep an OAuth
+# client secret. Follow CMS_SETUP.md, then replace this URL with the deployed
+# Cloudflare Worker URL. Never put the OAuth secret in this file.
+backend:
+    name: github
+    repo: liambakar/liambakar.github.io
+    branch: main
+    base_url: https://liambakar-decap-oauth.liambakar-decap-oauth.workers.dev
+    auth_endpoint: auth
+    auth_scope: public_repo
+    site_domain: liambakar.github.io
+    squash_merges: true
+
+publish_mode: editorial_workflow
+
+site_url: https://liambakar.github.io
+display_url: https://liambakar.github.io
+
+media_folder: images/blog
+public_folder: /images/blog
+
+slug:
+    encoding: ascii
+    clean_accents: true
+    sanitize_replacement: '-'
+
+editor:
+    preview: true
+
+collections:
+    - name: posts
+      label: Blog Posts
+      label_singular: Blog Post
+      folder: _posts
+      create: true
+      extension: md
+      format: frontmatter
+      slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+      summary: '{{title}} — {{date}}'
+      sortable_fields: [date, title, commit_date]
+      view_filters:
+          - label: Published
+            field: published
+            pattern: true
+          - label: Hidden
+            field: published
+            pattern: false
+      fields:
+          - label: Layout
+            name: layout
+            widget: hidden
+            default: post
+          - label: Title
+            name: title
+            widget: string
+          - label: Publish date
+            name: date
+            widget: datetime
+            date_format: MMMM D, YYYY
+            time_format: h:mm A
+            format: YYYY-MM-DD HH:mm:ss Z
+          - label: Description
+            name: description
+            widget: text
+            hint: A short summary shown on the homepage and in search previews.
+          - label: Cover image
+            name: cover_image
+            widget: image
+            required: false
+            choose_url: false
+            media_library:
+                config:
+                    multiple: false
+          - label: Cover image description
+            name: cover_alt
+            widget: string
+            required: false
+            hint: Describe the cover image for readers using a screen reader.
+          - label: Tags
+            name: tags
+            widget: list
+            required: false
+            allow_add: true
+            collapsed: false
+            field:
+                label: Tag
+                name: tag
+                widget: string
+          - label: Show on site
+            name: published
+            widget: boolean
+            default: true
+            hint: Turn this off to keep a merged post out of the public site.
+          - label: Body
+            name: body
+            widget: markdown
+            hint: 'Use the toolbar for headings, links, images, quotes, and lists. Footnotes use [^1] in the text and [^1]: Your note at the bottom.'
