@@ -29,6 +29,7 @@ As cliche as this is, the answer is in language models, but maybe not the way yo
 Gemini, Claude, ChatGPT, and other frontier models do a great job of turning strings of text into JSON objects, but they are expensive and lack in privacy.
 [NuExtract](https://about.nuextract.ai/) falls under the same umbrella, especially after their new [pricing update](https://about.nuextract.ai/pricing). 
 
+
  
 
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
