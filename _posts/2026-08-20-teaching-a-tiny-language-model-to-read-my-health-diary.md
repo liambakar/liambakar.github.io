@@ -23,7 +23,7 @@ The more structured and comprehensive someone wants their health logs to be, the
 
 How can we take a diary entry or natural description of someone's day and turn that into structured health logs?
 
-## Ideas
+## Idea
 
 As cliche as it sounds, the answer is in language models.
 
@@ -59,4 +59,10 @@ For example, given an <b>input</b> like <i>"I had a headache this morning so I s
 ```
 The actual schema is more detailed, but this is essentially the extraction mechanism we wanted the model to learn.
 
+## Journey
+
+Though this research did not result in a publication, I definitely learned a lot from the process.
+
+
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
+
