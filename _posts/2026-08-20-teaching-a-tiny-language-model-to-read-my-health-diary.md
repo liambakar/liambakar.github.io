@@ -59,7 +59,10 @@ For example, given an <b>input</b> like <i>"I had a headache this morning so I s
 ```
 The actual schema is more detailed, but this is essentially the extraction mechanism we wanted the model to learn.
 
-## Journey
+## Fine-Tuning
+
+The first thing that pops up into my mind when we want to create a task-specific LM is SFT.
+The hard part about any sort of supervised training is getting the dataset.
 
 
 
