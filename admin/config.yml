@@ -94,4 +94,4 @@ collections:
           - label: Body
             name: body
             widget: markdown
-            hint: 'Use the toolbar for headings, links, images, quotes, and lists. Footnotes use [^1] in the text and [^1]: Your note at the bottom.'
+            hint: 'Use $...$ for inline math and $$...$$ for display math. Footnotes use [^1] in the text and [^1]: Your note at the bottom.'

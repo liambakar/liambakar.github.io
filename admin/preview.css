@@ -157,3 +157,14 @@ body {
     margin-top: 3.5rem;
     padding-top: 1.5rem;
 }
+
+.preview-body .katex-display {
+    margin: 1.75rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25rem 0;
+}
+
+.preview-body .katex {
+    color: #e2e8f0;
+}

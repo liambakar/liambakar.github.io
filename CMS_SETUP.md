@@ -39,6 +39,10 @@ must create post branches and pull requests in this public repository.
 2. Fill in the title, date, short description, optional cover image and tags,
    then write the body in Markdown. The editor supports links and image uploads.
    For footnotes, use `[^1]` in the text and add `[^1]: The note` at the end.
+   For equations, switch the Body editor to **Markdown** mode. Use `$E = mc^2$`
+   for inline math or put display math between `$$` delimiters on separate
+   lines. The editor preview and published post both render the result with
+   KaTeX.
 3. Choose **Save** to create a draft pull request. Move the post through the
    editorial workflow and choose **Publish** when it is ready. Decap squash
    merges the draft into `main`; GitHub Pages then rebuilds the site.

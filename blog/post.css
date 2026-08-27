@@ -121,3 +121,14 @@ body {
 .post-body .reversefootnote {
     text-decoration: none;
 }
+
+.post-body .katex-display {
+    margin: 1.75rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25rem 0;
+}
+
+.post-body .katex {
+    color: #e2e8f0;
+}
