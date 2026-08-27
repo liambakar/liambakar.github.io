@@ -130,12 +130,16 @@ This repeats for every optimizer step:
 4. Clip the global gradient magnitude to 1.0.
 5. Apply the AdamW optimizer update.
 
-The result is a light information-extraction model specialized for this particular health and daily-life schema.
+The result is a [light information-extraction model](https://huggingface.co/lbakar/health-log-extraction) specialized for this particular health and daily-life schema.
 
-## Reinforcement Learning
+## Teaching with Rewards: GRPO Reinforcement Learning
 
 RL used to be the type of thing you learn in your robotics or algo class then never again.
 Now, it's the state-of-the-art way to improve Large Language Models.
+
+
+This pipeline uses Group Relative Policy Optimization (GRPO) to refine the existing health-information extraction model.
+For every utterance, we generate four candidate extractions.
 
 
 
