@@ -132,14 +132,22 @@ This repeats for every optimizer step:
 
 The result is a [light information-extraction model](https://huggingface.co/lbakar/health-log-extraction) specialized for this particular health and daily-life schema.
 
-## Teaching with Rewards: GRPO Reinforcement Learning
+## Reinforcement Learning
 
 RL used to be the type of thing you learn in your robotics or algo class then never again.
-Now, it's the state-of-the-art way to improve Large Language Models.
-
+Now, it's the state-of-the-art method of improving Large Language Models.
 
 This pipeline uses Group Relative Policy Optimization (GRPO) to refine the existing health-information extraction model.
 For every utterance, we generate four candidate extractions.
+
+Each candidate receives a numerical reward based on the following equation:
+$$
+total reward = 
+\begin{cases} -1 & \text{not a valid JSON} \\
+schema correctness + extraction accuracy + hallucination penalty & \text{otherwise}
+\end{cases}
+$$
+
 
 
 
