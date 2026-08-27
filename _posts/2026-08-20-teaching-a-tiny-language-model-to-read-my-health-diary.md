@@ -130,7 +130,7 @@ This repeats for every optimizer step:
 4. Clip the global gradient magnitude to 1.0.
 5. Apply the AdamW optimizer update.
 
-
+The result is a light information-extraction model specialized for this particular health and daily-life schema.
 
 ## Reinforcement Learning
 
