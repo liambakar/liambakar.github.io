@@ -149,8 +149,7 @@ total reward =
 $$
 This creates a reward distribution, which is then used as a baseline; responses scoring above the group average receive positive relative advantages and responses scoring below receive negative relative advantages. 
 This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
-
-
+These candidates have a higher likelihood of being generated.
 
 
 
