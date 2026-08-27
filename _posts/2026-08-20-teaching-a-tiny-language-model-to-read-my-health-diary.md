@@ -59,13 +59,8 @@ For example, given an <b>input</b> like <i>"I had a headache this morning so I s
 ```
 The actual schema is more detailed, but this is essentially the extraction mechanism we wanted the model to learn.
 
-## Fine-Tuning
 
-The first thing that pops up into my mind when we want to create a task-specific LM is SFT.
-The hard part about any sort of supervised training is getting the dataset.
-What did we use to generate a synthetic one? You guessed it— LLMs!
-
-### Dataset
+## Dataset
 
 First, we sampled demographic seeds from an occupation and age-range table from the Labor Force Statistics[^2]. 
 For each occupation, the pipeline randomly selected an age range, sampled an age within that range, and assigned a gender from a fixed set of options. 
@@ -73,9 +68,17 @@ These demographic seeds were used to prompt an LLM to generate structured person
 
 
 We then used each generated persona to synthesize labeled health-log entries. 
-A Jinja prompt template incorporated the persona attributes, the target category set, and few-shot examples of both single-label and multi-label logs.
-Gemini generated structured JSON outputs conforming to a predefined schema, where each example consisted of a message, modality, and one or more category labels.
-The resulting JSONL dataset was used to train a multi-label classifier over six categories: Activities, Mood, Symptoms, Treatment, Food, and NONE.
+A Jinja prompt template incorporated the persona attributes, the target category set, and few-shot examples of both single-label and multi-label logs, resulting in around 125K health utterances.
+
+We then ran [NuExtract3](https://huggingface.co/numind/NuExtract3) with our health log JSON template on each utterance, resulting in a comprehensive [labeled general-health-information extraction dataset](https://huggingface.co/datasets/lbakar/health-log-extraction-dataset).
+
+
+## Fine-Tuning
+
+The first thing that pops up into my mind when we want to create a task-specific LM is SFT.
+The hard part about any sort of supervised training is getting the dataset.
+What did we use to generate a synthetic one? You guessed it— LLMs!
+
 
 ## Reinforcement Learning
 
