@@ -59,6 +59,10 @@ For example, given an <b>input</b> like <i>"I had a headache this morning so I s
 ```
 The actual schema is more detailed, but this is essentially the extraction mechanism we wanted the model to learn.
 
+The first thing that pops up into my mind when we want to create a task-specific LM is SFT.
+The hard part about any sort of supervised training is getting the dataset.
+What did we use to generate a synthetic one? You guessed it— LLMs!
+
 
 ## Dataset
 
@@ -75,9 +79,7 @@ We then ran [NuExtract3](https://huggingface.co/numind/NuExtract3) with our heal
 
 ## Fine-Tuning
 
-The first thing that pops up into my mind when we want to create a task-specific LM is SFT.
-The hard part about any sort of supervised training is getting the dataset.
-What did we use to generate a synthetic one? You guessed it— LLMs!
+
 
 
 ## Reinforcement Learning
