@@ -107,7 +107,7 @@ We then perform full-parameter fine-tuning.
 
 Again, with our low-budget research environment, we distributed the training across four GPUs. 
 The training job uses data parallelism; each of the four GPUs holds a complete copy of the model and the training examples are divided among them. 
-Lightning's [DDPSrategy](https://lightning.ai/docs/fabric/stable/full-api-reference/api/generated/lightning.fabric.strategies.DDPStrategy) connects the processes into a single distributed training group.
+Lightning's [Distributed Data Parallel Strategy (DDP)](https://lightning.ai/docs/fabric/stable/full-api-reference/api/generated/lightning.fabric.strategies.DDPStrategy) connects the processes into a single distributed training group.
 
 Each GPU independently performs a forward pass on its local examples and calculates the language-model loss. 
 The backward pass calculates gradients for the model replica on that GPU.
@@ -118,8 +118,17 @@ Across four GPUs, one optimizer update represents approximately `4 examples/GPU 
 So the nominal effective global batch size is 256.
 During accumulation, Lightning allows the gradients to build locally until the optimizer update is due.
 
-At the update boundary, Distributed Data Parallel performs an all-reduce operation. 
+At the update boundary, DDP performs an all-reduce operation. 
 Conceptually, it averages corresponding gradients from all four replicas.
+Every process then applies the same gradient-clipping operation and optimizer update. 
+Because each replica starts with the same parameters and receives the same averaged gradients, all four model copies remain synchronized.
+
+This repeats for every optimizer step:
+1. Process separate examples.
+2. Accumulate gradients locally.
+3. Synchronize gradients across GPUs.
+4. Clip the global gradient magnitude to 1.0.
+5. Apply the AdamW optimizer update.
 
 
 
