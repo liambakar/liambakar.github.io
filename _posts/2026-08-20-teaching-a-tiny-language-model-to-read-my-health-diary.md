@@ -63,6 +63,13 @@ The actual schema is more detailed, but this is essentially the extraction mecha
 
 The first thing that pops up into my mind when we want to create a task-specific LM is SFT.
 The hard part about any sort of supervised training is getting the dataset.
+What did we use to generate a synthetic one? You guessed it— LLMs!
+
+### Dataset
+
+First, we sampled demographic seeds from an occupation and age-range table from the Labor Force Statistics[^2]. 
+For each occupation, the pipeline randomly selected an age range, sampled an age within that range, and assigned a gender from a fixed set of options. 
+These demographic seeds were used to prompt an LLM to generate structured personas containing a name, description, medications or supplements, general mood, and possible health conditions or injuries.
 
 ## Reinforcement Learning
 
@@ -72,4 +79,6 @@ Now, it's the state-of-the-art way to improve Large Language Models.
 
 
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
+
+[^2]: https://www.bls.gov/cps/cpsaat11b.htm
 
