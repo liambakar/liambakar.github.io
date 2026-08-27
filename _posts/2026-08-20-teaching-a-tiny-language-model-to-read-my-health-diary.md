@@ -144,9 +144,14 @@ Each candidate receives a numerical reward based on the following equation:
 $$
 total reward = 
 \begin{cases} -1 & \text{not a valid JSON} \\
-schema correctness + extraction accuracy + hallucination penalty & \text{otherwise}
+0.1 \cdot schema correctness + 0.7 \cdot extraction accuracy + 0.2 \cdot hallucination penalty & \text{otherwise}
 \end{cases}
 $$
+This creates a reward distribution, which is then used as a baseline; responses scoring above the group average receive positive relative advantages and responses scoring below receive negative relative advantages. 
+This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
+
+
+
 
 
 
