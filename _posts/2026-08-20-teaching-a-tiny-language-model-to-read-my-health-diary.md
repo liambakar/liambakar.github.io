@@ -160,7 +160,50 @@ GRPO normalizes rewards within the group, giving above-average responses positiv
 This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
 These candidates have a higher likelihood of being generated.
 
+Now, we have a fine-tuned, [RL-boosted lightweight model]().
 
+## What's next?
+
+Extraction only gets us so far.
+
+If someone writes, *"I had a horrible headache after lunch,"* the model might correctly identify the symptom, its approximate time, and perhaps its severity. But there are still plenty of things it doesn't know. 
+
+How long did it last? 
+Did they take anything for it? 
+Has this happened before?
+
+We could ask all of those questions.
+
+This introduces the two questions I want to answer in the future:
+
+#### 1. What kinds of questions should we ask?
+
+People have different preferences for how they answer questions. 
+Some may prefer multiple choice, while others may prefer short free-text responses or other interaction styles.
+
+Can we adapt the way we ask follow-up questions to match the preferences of an individual while still collecting useful information?
+
+#### 2. How can we justify when to ask a person to fill in missing information?
+
+Every follow-up question has a cost.
+It takes time, creates friction, and adds user burden.
+
+Given our extraction mechanism, we can turn this into an [information gain](https://en.wikipedia.org/wiki/Information_gain_(decision_tree)) problem.
+We can generate candidate questions and their corresponding answers, estimate how much each question could reduce entropy or uncertainty in the health log, and compare that benefit with against the burden of asking it.
+
+The goal is to ask a question only when
+$$\text{expected information gain} > \text{cost of asking the user}$$
+
+Much literature exists surrounding this[^3], but these NLP approaches represent user burden with a fixed constant or a relatively simple numerical function.
+Human preferences are unlikely to be that simple.
+
+If we can learn a better representation of how people actually perceive the burden of follow-up questions, we may be able to build systems that ask fewer, better questions.
+
+The health domain also provides another useful constraint.
+Not all missing information is equally valuable. 
+Knowing whether someone took a medication may matter more than knowing the location of where they ate lunch.
+
+So, I want to answer the following question: **How can we balance information gain, domain-specific value, and human burden to decide when—and how—to ask a follow-up question?**
 
 
 
@@ -168,3 +211,4 @@ These candidates have a higher likelihood of being generated.
 
 [^2]: https://www.bls.gov/cps/cpsaat11b.htm
 
+[^3]: I do recommend reading these papers because they're very well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare ya'll this time. 
