@@ -70,7 +70,6 @@ First, we sampled demographic seeds from an occupation and age-range table from 
 For each occupation, the pipeline randomly selected an age range, sampled an age within that range, and assigned a gender from a fixed set of options. 
 These demographic seeds were used to prompt an LLM to generate structured personas containing a name, description, medications or supplements, general mood, and possible health conditions or injuries.
 
-
 We then used each generated persona to synthesize labeled health-log entries. 
 A Jinja prompt template incorporated the persona attributes, the target category set, and few-shot examples of both single-label and multi-label logs, resulting in around 125K health utterances.
 
