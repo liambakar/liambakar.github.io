@@ -178,10 +178,27 @@ This introduces the two questions I want to answer in the future:
 
 #### 1. What kinds of questions should we ask?
 
-People have different preferences for how they answer questions. 
-Some may prefer multiple choice, while others may prefer short free-text responses or other interaction styles.
+Knowing that information is missing does not tell us what question to ask.
 
-Can we adapt the way we ask follow-up questions to match the preferences of an individual while still collecting useful information?
+Suppose someone writes, "I had a headache after lunch." There are many reasonable follow-ups. We could ask about the duration, severity, triggers, and frequency. 
+Each question would fill a different part of the health record, but differ in how much effort they require from the user.
+
+The format of the question could also differ. 
+Multiple choice, short answer, selection, and confirmation questions affect the interactions surrounding a health logging system and each format brings its own pros and cons. 
+
+People may also have preferences. 
+One person may prefer tapping through a few multiple-choice questions, while another may find that tedious and prefer answering everything in a single sentence.
+
+Those preferences could also depend on context. 
+Someone might be happy to answer a free-text question while sitting at home, but prefer a one-tap response while walking or commuting.
+
+So, I want to answer the following question: **What is the best way to request that information from this person, in this context?**
+
+I want to explore whether a system can learn these interaction preferences over time. 
+If a user consistently ignores open-ended questions but responds to multiple-choice prompts, the system could adapt. 
+Similarly, if someone tends to give richer responses when asked about symptoms but prefers quick confirmations for food logs, the interaction style could vary by category.
+
+This introduces a personalization problem: choosing what to ask and how to ask it in a way that maximizes useful information while minimizing effort.
 
 #### 2. How can we justify when to ask a person to fill in missing information?
 
