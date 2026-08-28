@@ -5,6 +5,14 @@ date: 2026-08-20 21:32:00 +00:00
 description: What I learned fine-tuning Qwen3-0.6B to turn free-form health
   diary entries into structured logs. What we can do with this knowledge
 cover_image: /images/blog/image.png
+cover_alt: ""
+tags:
+  - health tracking
+  - Information Extraction
+  - LLM
+  - Qwen3
+  - Fine-Tuning
+  - Reinforcement Learning
 published: true
 ---
 ## Motivation
