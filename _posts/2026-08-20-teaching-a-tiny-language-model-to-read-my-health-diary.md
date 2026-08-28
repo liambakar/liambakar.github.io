@@ -127,22 +127,26 @@ We then perform full-parameter fine-tuning and end up with a [light information-
 ## Reinforcement Learning
 
 RL used to be the type of thing you learn in your robotics or algo class then never again.
-Now, it's the state-of-the-art method of improving Large Language Models.
+Now, it's a widely used method for post-training language models.
 
 This pipeline uses Group Relative Policy Optimization (GRPO) to refine the existing health-information extraction model.
 For every utterance, we generate four candidate extractions.
 
 Each candidate receives a numerical reward based on the following equation:
 $$
-\text{total reward} = 
+R_\text{total} = 
 \begin{cases} -1 & \text{not a valid JSON} \\
 \\
-\text{extraction accuracy} & \text{otherwise}  \\
-\quad + \text{schema correctness}\\
-\quad + \text{hallucination penalty} 
+R_\text{extraction} + R_\text{schema} - P_\text{hallucination}  & \text{otherwise}  
 \end{cases}
 $$
-This creates a reward distribution, which is then used as a baseline; responses scoring above the group average receive positive relative advantages and responses scoring below receive negative relative advantages. 
+
+- $R_\text{extraction}$: a reward for recovering the information present in the diary entry 
+- $R_\text{schema}$: a reward for following the schema and using the correct dtypes
+- $P_\text{hallucination}$: a penalty for adding information unseen in the diary entry
+
+Because the candidates were generated for the same input, we could score them relative to one another. 
+GRPO normalizes rewards within the group, giving above-average responses positive advantages and below-average responses negative advantages.
 This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
 These candidates have a higher likelihood of being generated.
 
