@@ -93,19 +93,6 @@ The configuration accumulates gradients for 16 microbatches before updating the 
 Each GPU processes `4 examples × 16 microbatches = 64 examples`.
 Across four GPUs, one optimizer update represents approximately `4 examples/GPU × 4 GPUs × 16 accumulation steps = 256 examples`.
 So the nominal effective global batch size is 256.
-During accumulation, Lightning allows the gradients to build locally until the optimizer update is due.
-
-At the update boundary, DDP performs an all-reduce operation. 
-Conceptually, it averages corresponding gradients from all four replicas.
-Every process then applies the same gradient-clipping operation and optimizer update. 
-Because each replica starts with the same parameters and receives the same averaged gradients, all four model copies remain synchronized.
-
-This repeats for every optimizer step:
-1. Process separate examples.
-2. Accumulate gradients locally.
-3. Synchronize gradients across GPUs.
-4. Clip the global gradient magnitude to 1.0.
-5. Apply the AdamW optimizer update.
 
 ## Fine-Tuning
 
