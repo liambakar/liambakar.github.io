@@ -144,6 +144,7 @@ Each candidate receives a numerical reward based on the following equation:
 $$
 \text{total reward} = 
 \begin{cases} -1 & \text{not a valid JSON} \\
+\\
  \text{schema correctness} & \text{otherwise}  \\
 \quad + \text{extraction accuracy}\\
 \quad + \text{hallucination penalty} 
