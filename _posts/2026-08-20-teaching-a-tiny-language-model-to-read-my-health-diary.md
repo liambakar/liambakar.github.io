@@ -44,8 +44,18 @@ Additionally, it's not cheap to use said APIs.
 Specialized information-extraction models like [NuExtract](https://about.nuextract.ai/) fall under the same umbrella, especially after their new [pricing model](https://about.nuextract.ai/pricing). 
 
 So we took a different approach: fine-tuning [Qwen3-0.6b](https://huggingface.co/Qwen/Qwen3-0.6B).
+
 At around 600M parameters, Qwen3-0.6b is tiny by modern LLM standards; small enough that it can run on cheap hardware or even on your phone.
 Moreover, our task does not require a general-purpose model, it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
+
+I'm obviously not the first to think of diary-styled tracking.
+A growing number of companies and research labs are exploring ways to make health logging feel more natural.
+
+One example, [Luffu](https://luffu.com/), allows people to *"Use voice, text, photos, documents, or app integrations to instantly record information, from medical records and medications to meals and vital signs."*
+
+This is the type of interaction I'm interested in; though rather than focusing on building the full health-tracking product, I am focusing on the model beneath it.
+
+I want to to ensure that the model is small, reliable, private, and cheap.
 
 We fine-tuned Qwen3-0.6b specifically for information extraction using our general health-log JSON template. 
 For example, given an **input** like *"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"* we want the model to produce an **output** like:
