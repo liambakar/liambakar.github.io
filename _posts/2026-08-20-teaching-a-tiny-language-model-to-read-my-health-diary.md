@@ -66,6 +66,10 @@ What did we use to generate a synthetic one? You guessed it— LLMs!
 
 ## Dataset
 
+Notoriously, LLMs do not write like real humans.
+An LLM's idea of how someone describes their headache may be much cleaner than how someone actually writes when their head hurts.
+So, we tried to make it as realistic as possible.
+
 First, we sampled demographic seeds from an occupation and age-range table from the Labor Force Statistics[^2]. 
 For each occupation, the pipeline randomly selected an age range, sampled an age within that range, and assigned a gender from a fixed set of options. 
 These demographic seeds were used to prompt an LLM to generate structured personas containing a name, description, medications or supplements, general mood, and possible health conditions or injuries.
