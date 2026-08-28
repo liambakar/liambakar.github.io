@@ -136,6 +136,10 @@ We then perform full-parameter fine-tuning and end up with a [light information-
 
 ## Reinforcement Learning
 
+Since we care about extracting the right information, following the schema, and avoiding hallucinations, I chose to augment the SFT model with some RL. 
+
+SFT taught Qwen the format, and RL helped optimize the behavior we actually care about.
+
 RL used to be the type of thing you learn in your robotics or algo class then never again.
 Now, it's a widely used method for post-training language models.
 
