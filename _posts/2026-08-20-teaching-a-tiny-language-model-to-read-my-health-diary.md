@@ -145,8 +145,8 @@ $$
 \text{total reward} = 
 \begin{cases} -1 & \text{not a valid JSON} \\
 \\
- \text{schema correctness} & \text{otherwise}  \\
-\quad + \text{extraction accuracy}\\
+\text{extraction accuracy} & \text{otherwise}  \\
+\quad + \text{schema correctness}\\
 \quad + \text{hallucination penalty} 
 \end{cases}
 $$
