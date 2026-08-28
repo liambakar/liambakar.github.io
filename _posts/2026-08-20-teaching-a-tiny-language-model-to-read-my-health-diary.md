@@ -29,15 +29,15 @@ People have been doing this forever when it comes to tracking their macros when 
 These records capture subjective experiences sensors often miss.
 
 The issue is that active tracking requires work.
-The more structured and comprehensive someone wants their health logs to be, the more effort they need to put into creating it. That tension is what led me to ask the question: 
+Creating a structured and comprehensive health logs requires more user effort. So, I want to answer the following:
 
-How can we take a diary entry or natural description of someone's day and turn that into structured health logs?
+**How can we take a diary entry or natural description of someone's day and turn that into structured health logs?**
 
 ## Idea
 
 As cliche as it sounds, the answer is in language models.
 
-Models like Gemini, Claude, and ChatGPT can take a free-form description and reliably turn it into structured output such as JSON.
+Models like Gemini, Claude, and ChatGPT can reliably convert a free-form description into a structured output such as JSON.
 But using a large hosted model for every health log introduces a couple drawbacks.
 Health diaries can contain highly personal information, and relying on an external API means sending that information to a third-party service.
 Additionally, it's not cheap to use said APIs.
@@ -48,7 +48,7 @@ At around 600M parameters, Qwen3-0.6b is tiny by modern LLM standards; small eno
 Moreover, our task does not require a general-purpose model, it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
 
 We fine-tuned Qwen3-0.6b specifically for information extraction using our general health-log JSON template. 
-For example, given an <b>input</b> like <i>"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"</i> we want the model to produce an <b>output</b> like:
+For example, given an **input** like *"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"* we want the model to produce an **output** like:
 ```json
 {
     "activity": {},
@@ -87,9 +87,9 @@ A Jinja prompt template incorporated the persona attributes, the target category
 Upon inspection of these utterances, we confirmed that LLMs notoriously do not write like real humans.
 An LLM's idea of how someone describes their headache may be much cleaner than how someone actually writes when their head hurts.
 
-Similarly, persona generation can introduce weird distributions. You can generate diversity, but generated personas are often repetitive in sentence structure and do not represent the messiness and ambiguity in real human writing.
+Similarly, persona generation can introduce weird distributions. Generated personas are often repetitive in sentence structure and do not represent the messiness and ambiguity in real human writing.
 
-Instead of manually labeling every utterance, the pipeline uses the larger [NuExtract3](https://huggingface.co/numind/NuExtract3) model as a teacher.
+Instead of hand labeling every utterance, the pipeline uses the larger [NuExtract3](https://huggingface.co/numind/NuExtract3) model as a teacher.
 NuExtract3 receives the natural language utterance and a JSON template describing our intended output.
 
 Given our low resource research environment, extraction was distributed across a resumable pool of GPU workers with semaphoring.
@@ -166,7 +166,7 @@ Now, we have a fine-tuned, [RL-boosted lightweight model]().
 
 Extraction only gets us so far.
 
-If someone writes, *"I had a horrible headache after lunch,"* the model might correctly identify the symptom, its approximate time, and perhaps its severity. But there are still plenty of things it doesn't know. 
+If someone writes, *"I had a horrible headache after lunch,"* the model might correctly identify the symptom, its approximate time, and its severity. But there are still plenty of things it doesn't know. 
 
 How long did it last? 
 Did they take anything for it? 
@@ -180,14 +180,15 @@ This introduces the two questions I want to answer in the future:
 
 Knowing that information is missing does not tell us what question to ask.
 
-Suppose someone writes, "I had a headache after lunch." There are many reasonable follow-ups. We could ask about the duration, severity, triggers, and frequency. 
+Take the above utterance about the headache after lunch.
+We could ask about the duration, severity, triggers, and frequency. 
 Each question would fill a different part of the health record, but differ in how much effort they require from the user.
 
 The format of the question could also differ. 
 Multiple choice, short answer, selection, and confirmation questions affect the interactions surrounding a health logging system and each format brings its own pros and cons. 
 
 People may also have preferences. 
-One person may prefer tapping through a few multiple-choice questions, while another may find that tedious and prefer answering everything in a single sentence.
+One person may prefer multiple-choice questions, while another may prefer answering everything in a single sentence.
 
 Those preferences could also depend on context. 
 Someone might be happy to answer a free-text question while sitting at home, but prefer a one-tap response while walking or commuting.
@@ -195,8 +196,8 @@ Someone might be happy to answer a free-text question while sitting at home, but
 So, I want to answer the following question: **What is the best way to request that information from this person, in this context?**
 
 I want to explore whether a system can learn these interaction preferences over time. 
-If a user consistently ignores open-ended questions but responds to multiple-choice prompts, the system could adapt. 
-Similarly, if someone tends to give richer responses when asked about symptoms but prefers quick confirmations for food logs, the interaction style could vary by category.
+If a user ignores open-ended questions but responds to multiple-choice prompts, the system could adapt. 
+If a user gives more detailed responses when asked about symptoms but gives more sparse responses for food logs, the interaction style could vary by category.
 
 This introduces a personalization problem: choosing what to ask and how to ask it in a way that maximizes useful information while minimizing effort.
 
