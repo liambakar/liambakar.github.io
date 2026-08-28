@@ -144,9 +144,9 @@ Each candidate receives a numerical reward based on the following equation:
 $$
 \text{total reward} = 
 \begin{cases} -1 & \text{not a valid JSON} \\
-0.1 \cdot \text{schema correctness} & \text{otherwise} \\
-\quad + 0.7 \cdot \text{extraction accuracy} \\
-\quad + 0.2 \cdot \text{hallucination penalty} 
+ \text{schema correctness} & \text{otherwise}  \\
+\quad + \text{extraction accuracy}\\
+\quad + \text{hallucination penalty} 
 \end{cases}
 $$
 This creates a reward distribution, which is then used as a baseline; responses scoring above the group average receive positive relative advantages and responses scoring below receive negative relative advantages. 
