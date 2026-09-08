@@ -1,6 +1,3 @@
----
----
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -24,7 +21,7 @@
         />
         <link
             rel="stylesheet"
-            href="./academic/site.css"
+            href="./site.css"
         />
     </head>
     <body>
@@ -61,7 +58,7 @@
             >
                 <img
                     class="portrait"
-                    src="./images/4.jpg"
+                    src="../images/4.jpg"
                     alt="Portrait of Liam Bakar"
                 />
                 <h1 id="profile-name">Liam Bakar</h1>
@@ -192,7 +189,7 @@
                                 using a multimodal AI application.
                             </p>
                             <p class="entry-links">
-                                <a href="./academic/projects/loatrack.html"
+                                <a href="./projects/loatrack.html"
                                     >Project page</a
                                 >
                             </p>
@@ -204,7 +201,7 @@
                                 analyzing risk in cancer patients.
                             </p>
                             <p class="entry-links">
-                                <a href="./academic/projects/risk-analysis.html"
+                                <a href="./projects/risk-analysis.html"
                                     >Project page</a
                                 >
                             </p>
@@ -216,7 +213,7 @@
                                 physicians better context before consultations.
                             </p>
                             <p class="entry-links">
-                                <a href="./academic/projects/pre-consultation.html"
+                                <a href="./projects/pre-consultation.html"
                                     >Project page</a
                                 >
                             </p>
@@ -230,24 +227,6 @@
                 >
                     <h2 id="writing-heading">Writing</h2>
                     <div class="entry-list">
-                        {% for post in site.posts %}
-                        <article>
-                            <p class="entry-date">
-                                <time datetime="{{ post.date | date_to_xmlschema }}"
-                                    >{{ post.date | date: "%-d %B %Y" }}</time
-                                >
-                            </p>
-                            <h3>
-                                <a href="{{ post.url | relative_url }}"
-                                    >{{ post.title | escape }}</a
-                                >
-                            </h3>
-                            <p>
-                                {{ post.description | default: post.excerpt |
-                                strip_html | truncatewords: 32 }}
-                            </p>
-                        </article>
-                        {% endfor %}
                         <article>
                             <p class="entry-date">
                                 <time datetime="2026-02-05"
@@ -255,7 +234,7 @@
                                 >
                             </p>
                             <h3>
-                                <a href="./academic/blog-posts/4.html"
+                                <a href="./blog-posts/4.html"
                                     >Game Theory IRL</a
                                 >
                             </h3>
@@ -271,7 +250,7 @@
                                 >
                             </p>
                             <h3>
-                                <a href="./academic/blog-posts/3.html">Some pictures</a>
+                                <a href="./blog-posts/3.html">Some pictures</a>
                             </h3>
                             <p>Life through a lens—or several.</p>
                         </article>
@@ -280,7 +259,7 @@
                                 <time datetime="2025-07-18">18 July 2025</time>
                             </p>
                             <h3>
-                                <a href="./academic/blog-posts/2.html"
+                                <a href="./blog-posts/2.html"
                                     >Are LLMs the new calculators?</a
                                 >
                             </h3>
@@ -294,7 +273,7 @@
                                 <time datetime="2025-07-16">16 July 2025</time>
                             </p>
                             <h3>
-                                <a href="./academic/blog-posts/1.html"
+                                <a href="./blog-posts/1.html"
                                     >USA Men’s Volleyball</a
                                 >
                             </h3>

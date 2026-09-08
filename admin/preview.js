@@ -304,6 +304,7 @@
         },
     });
 
+    CMS.registerPreviewStyle('https://latex.vercel.app/style.css');
     CMS.registerPreviewStyle(
         'https://cdn.jsdelivr.net/npm/katex@0.18.4/dist/katex.min.css',
     );

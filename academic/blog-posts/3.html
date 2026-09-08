@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    class="scroll-smooth"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>pics :) - Liam Bakar</title>
+
+        <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
+        <link rel="stylesheet" href="../site.css" />
+    </head>
+    <body class="entry-page">
+        <main class="container mx-auto px-6 pt-12 pb-16">
+            <!-- Blog Post Content -->
+            <article>
+                <div class="max-w-4xl mx-auto">
+                    <header class="pt-4 mb-8">
+                        <a
+                            href="../../index.html#writing"
+                            class="text-emerald-400 font-semibold hover:text-emerald-300 mb-4 inline-block"
+                            >&larr; Back to Main</a
+                        >
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            pics :)
+                        </h1>
+                        <p class="mt-2 text-sm text-slate-500">
+                            try to update frequently
+                        </p>
+                        <div
+                            class="masonry-container"
+                            id="gallery"
+                            aria-label="Personal photographs"
+                        ></div>
+
+                        <script src="../../blog-posts/image-list.js"></script>
+                        <script>
+                            const gallery = document.getElementById('gallery');
+                            allImages.forEach((imageName) => {
+                                const item = document.createElement('div');
+                                const image = document.createElement('img');
+                                item.className = 'grid-item';
+                                image.src = '../../images/pics/' + imageName;
+                                image.alt = '';
+                                image.loading = 'lazy';
+                                item.append(image);
+                                gallery.append(item);
+                            });
+                        </script>
+                    </header>
+                </div>
+            </article>
+        </main>
+    </body>
+</html>
