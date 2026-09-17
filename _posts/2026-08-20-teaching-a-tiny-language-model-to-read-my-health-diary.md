@@ -172,6 +172,9 @@ $$
 - $R_\text{schema}$: a reward for following the schema and using the correct dtypes
 - $P_\text{hallucination}$: a penalty for adding information unseen in the diary entry
 
+To measure the rewards for extraction and penalities for hallucination, we use a natural language inference (NLI) model.
+It reads the utterance alongside the claim made from the extracted value, then judges whether the entry supports or contradicts the claim or if it's neutral.
+
 Because the candidates were generated for the same input, we could score them relative to one another. 
 GRPO normalizes rewards within the group, giving above-average responses positive advantages and below-average responses negative advantages.
 This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
