@@ -179,6 +179,31 @@ These candidates have a higher likelihood of being generated.
 
 Now, we have a fine-tuned, [RL-boosted lightweight model]().
 
+### Side Note
+
+As I'm writing this, a new approach to structured generation emerged.
+Traditional language models that use autoregressive generation output sequentially. This means generating one token at a time, with each token conditioned on everything before it.
+[TypeSafe](https://typesafe.ai/) recently introduced Reinforcement Learning for Calibrated Decisions (RLCD), which trains models to produce typed decisions with probabilities.
+Rather than generating an entire JSON object, these models evaluate predefined output choices in parallel.
+
+For a field with possible values $(c_1,\ldots,c_n)$, the model produces logits $(z_1,\ldots,z_n)$, which can be converted into probabilities using a softmax:
+
+
+$$P(c_i \mid x)=\frac{\exp(z_i)}{\sum_{j=1}^{n}\exp(z_j)}.$$
+
+For example, rather than generating `"mood": "negative"` as text, the model might produce
+
+$$
+P(\text{positive})=0.05,\qquad
+P(\text{neutral})=0.15,\qquad
+P(\text{negative})=0.80.
+$$
+
+Someone made a pretty cool open-source version of this idea using Qwen2.5 [here](https://huggingface.co/harshatheg/Qwen-2.5-1B-RLCD).
+They use parallel constrained decoding, restricting the model's logits to the valid choices for each field, normalizing over those choices, then evaluating multiple fields from a shared KV cache rather.
+
+Only a few fields in our health-log come from a predefined set of choices, so RLCD may not be as useful for us. It may be worth exploring a mixed approach in the future.
+
 ## What's next?
 
 Extraction only gets us so far.
@@ -247,3 +272,4 @@ So, I want to answer the following question: **How can we balance information ga
 [^2]: https://www.bls.gov/cps/cpsaat11b.htm
 
 [^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare ya'll this time. 
+
