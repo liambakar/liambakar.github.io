@@ -260,6 +260,8 @@ $$\text{expected information gain} > \text{cost of asking the user}$$
 Much literature exists surrounding this[^3], but these NLP approaches represent user burden with a fixed constant or a relatively simple numerical function.
 Human preferences are unlikely to be that simple.
 
+Another interesting and recent endeavor surrounding uncertainty is using [JEV-as-a-Judge](https://arxiv.org/pdf/2609.26550). The paper linked here is not that great in my opinion, but the concept is very applicable here. 
+
 If we can learn a better representation of how people actually perceive the burden of follow-up questions, we may be able to build systems that ask fewer, better questions.
 
 The health domain also provides another useful constraint.
