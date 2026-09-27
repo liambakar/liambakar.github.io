@@ -180,7 +180,7 @@ GRPO normalizes rewards within the group, giving above-average responses positiv
 This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
 These candidates have a higher likelihood of being generated.
 
-Now, we have a fine-tuned, [RL-boosted lightweight model]().
+Now, we have a fine-tuned, [RL-boosted lightweight model](https://huggingface.co/lbakar/health-log-extraction-GRPO).
 
 ### Side Note
 
