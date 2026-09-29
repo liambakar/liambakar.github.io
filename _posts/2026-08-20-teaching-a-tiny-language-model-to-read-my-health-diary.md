@@ -153,7 +153,7 @@ We then perform full-parameter fine-tuning and end up with a [light information-
 SFT revolves around matching a target sequence of tokens, but we also want to emphasize extracting the right information, following the schema, and avoiding hallucinations.
 To do this, we chose to augment the SFT model with some RL. 
 
-RL used to be the type of thing you learn in your robotics or algo class then never again.
+RL used to be the type of thing you learn in your robotics or algo class, then never again.
 Now, it's a widely used method for post-training language models.
 
 This pipeline uses Group Relative Policy Optimization (GRPO) to refine the existing health-information extraction model.
