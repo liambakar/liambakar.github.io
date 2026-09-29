@@ -210,25 +210,30 @@ Only a few fields in our health-log come from a predefined set of choices, so RL
 
 ## Evaluation
 
-We evaluated the models on the [validation dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset) we discussed earlier. 
+We evaluated the models on the [validation dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset) discussed earlier. 
 
-We define leaf accuracy as a measurement of how many individual fields in the nested JSON output are correct:
+To evaluate structured extraction quality, we define leaf accuracy as the fraction of individual leaf fields in the nested JSON output that exactly match the ground truth:
 
 $$\text{Leaf accuracy} =
 \frac{\text{correct values} + \text{correct nulls}}
 {\text{all ground-truth fields}}$$
 
-Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has 6.7x more parameters and is also the base model used to finetune NuExtract. We do not validate against NuExtract because that is the model that provided us with our ground truths for the train and validation set. 
+Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has 6.7x more parameters and is also the base model used to finetune NuExtract. We do not validate against NuExtract because that is the model that provided us with our ground truths for the train and validation set; evaluating against it would not provide an independent comparison.
+
 ![Leaf accuracy](/images/blog/001-performance-at-a-glance.png "Leaf accuracy")
 
-Interestingly, Qwen3-0.6B attains a better leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
+Interestingly, the base Qwen3-0.6B model achieves a higher leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
 
 ![Precision-recall trade-off](/images/blog/04-precision-recall-landscape.png "Precision-recall trade-off")
 
 We do see that the 1.7B model is actually a better overall information-extraction model in its higher F1-score. Note that precision and recall are only calculated for non-empty fields to not artificially inflate the scores.
 
-We also see that the GRPO-based extraction model performs marginally better than the just SFT-based model. This is because the reinforcement learning rewarded maintaining the correct structure and the right amount of field-filling conservatism.
-GRPO made the model slightly more reliable at producing schema-compliant output, but did not improve semantic extraction quality. This is likely because we used the same training set for SFT and GRPO.
+We also find that the GRPO-based extraction model performs marginally better than the model trained with supervised fine-tuning (SFT) alone.
+During reinforcement learning, the reward function encouraged both schema compliance and an appropriate level of conservatism when deciding whether to populate a field.
+
+In practice, GRPO made the model slightly more reliable at producing well-formed, schema-compliant outputs, but did not noticeably improve the semantic quality of the extracted information. 
+Because our GRPO stage reused the same underlying training data as SFT, this likely did not introduce enough additional new semantic signal for the model to learn. 
+The reinforcement-learning stage therefore appears to have been more useful for producing structure than for improving what it extracts.
 
 ## What's next?
 
