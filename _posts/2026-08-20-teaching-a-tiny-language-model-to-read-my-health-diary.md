@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Teaching a Tiny Language Model to Read My Health Diary
-date: 2026-08-20 21:32:00 +00:00
+title: Teaching a Tiny Local Model to Organize My Health Diary
+date: 2026-09-29 17:39:00 +01:00
 description: Fine-tuning Qwen3-0.6B to turn free-form health diary entries into
   structured logs. What can we do with this knowledge? Where can we go from
   here?
