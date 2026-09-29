@@ -208,7 +208,7 @@ They use parallel constrained decoding, restricting the model's logits to the va
 
 Only a few fields in our health-log come from a predefined set of choices, so RLCD may not be as useful for us. It may be worth exploring a mixed approach in the future.
 
-## Validation
+## Evaluation
 
 We evaluated the models on the [validation dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset) we discussed earlier. 
 
@@ -223,7 +223,7 @@ Our Health Log Extraction models outperform the base Qwen models, including [Qwe
 
 Interestingly
 
-
+![](/images/blog/04-precision-recall-landscape.png "Precision-recall trade-off")
 
 ## What's next?
 
