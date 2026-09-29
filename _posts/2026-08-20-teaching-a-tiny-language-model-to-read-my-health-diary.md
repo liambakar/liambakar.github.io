@@ -60,6 +60,7 @@ I want to to ensure that the model is small, reliable, private, and cheap.
 
 We fine-tuned Qwen3-0.6b specifically for information extraction using our general health-log JSON template. 
 For example, given an **input** like *"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"* we want the model to produce an **output** like:
+
 ```json
 {
     "activity": {},
@@ -78,6 +79,7 @@ For example, given an **input** like *"I had a headache this morning so I skippe
     "treatment": {}
 }
 ```
+
 The actual schema is more detailed, but this is essentially the extraction mechanism we wanted the model to learn.
 
 The obvious place to start was supervised fine-tuning (SFT). 
@@ -85,10 +87,9 @@ The hard part about any sort of supervised training is getting the dataset.
 
 What did we use to generate a synthetic one? You guessed it— LLMs!
 
-
 ## Dataset
 
-First, we sampled demographic seeds from an occupation and age-range table from the Labor Force Statistics[^2]. 
+First, we sampled demographic seeds from an occupation and age-range table from the Labor Force Statistics[^2](https://www.bls.gov/cps/cpsaat11b.htm). 
 For each occupation, the pipeline randomly selected an age range, sampled an age within that range, and assigned a gender from a fixed set of options. 
 These demographic seeds were used to prompt an LLM to generate structured personas containing a name, description, medications or supplements, general mood, and possible health conditions or injuries.
 
@@ -129,6 +130,7 @@ Using a large teacher model, we distill information into our smaller student mod
 However, it's not classical knowledge distillation as our student model never sees the logits of the teacher. 
 In our case, the student model was Qwen3-0.6B.
 Each row is formatted into the following prompt:
+
 ```
 <template>
 The JSON structure to fill in
@@ -142,13 +144,13 @@ The original utterance
 The expected structured extraction
 </assistant>
 ```
+
 The loss is masked over the template and user message. 
 Qwen is not trained to reproduce its prompt; it is graded only on the structured JSON it should generate. 
 
 We then perform full-parameter fine-tuning and end up with a [light information-extraction model](https://huggingface.co/lbakar/health-log-extraction) specialized for this particular health and daily-life schema.
 
 ## Reinforcement Learning
-
 
 SFT revolves around matching a target sequence of tokens, but we also want to emphasize extracting the right information, following the schema, and avoiding hallucinations.
 To do this, we chose to augment the SFT model with some RL. 
@@ -161,16 +163,16 @@ For every utterance, we generate four candidate extractions.
 
 Each candidate receives a numerical reward based on the following equation:
 $$
-R_\text{total} = 
-\begin{cases} -1 & \text{not a valid JSON} \\
-\\
-R_\text{extraction} + R_\text{schema} - P_\text{hallucination}  & \text{otherwise}  
+R*\text{total} = 
+\begin{cases} -1 & \text{not a valid JSON} \
+\
+R*\text{extraction} + R*\text{schema} - P*\text{hallucination}  & \text{otherwise}\
 \end{cases}
 $$
 
-- $R_\text{extraction}$: a reward for recovering the information present in the diary entry 
-- $R_\text{schema}$: a reward for following the schema and using the correct dtypes
-- $P_\text{hallucination}$: a penalty for adding information unseen in the diary entry
+* $R_\text{extraction}$: a reward for recovering the information present in the diary entry 
+* $R_\text{schema}$: a reward for following the schema and using the correct dtypes
+* $P_\text{hallucination}$: a penalty for adding information unseen in the diary entry
 
 To measure the rewards for extraction and penalities for hallucination, we use a natural language inference (NLI) model.
 It reads the utterance alongside the claim made from the extracted value, then judges whether the entry supports or contradicts the claim or if it's neutral.
@@ -191,8 +193,7 @@ Rather than generating an entire JSON object, these models evaluate predefined o
 
 For a field with possible values $(c_1,\ldots,c_n)$, the model produces logits $(z_1,\ldots,z_n)$, which can be converted into probabilities using a softmax:
 
-
-$$P(c_i \mid x)=\frac{\exp(z_i)}{\sum_{j=1}^{n}\exp(z_j)}.$$
+$$P(c*i \mid x)=\frac{\exp(z_i)}{\sum*{j=1}^{n}\exp(z_j)}.$$
 
 For example, rather than generating `"mood": "negative"` as text, the model might produce
 
@@ -211,7 +212,16 @@ Only a few fields in our health-log come from a predefined set of choices, so RL
 
 We evaluated the models on the [validation dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset) we discussed earlier. 
 
+We define leaf accuracy as a measurement of how many individual fields in the nested JSON output are correct:
 
+$$\text{Leaf accuracy} =
+\frac{\text{correct values} + \text{correct nulls}}
+{\text{all ground-truth fields}}$$
+
+Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has 6.7x more parameters and is also the base model used to finetune NuExtract. We do not validate against NuExtract because that is the model that provided us with our ground truths for the train and validation set. 
+![Leaf accuracy](/images/blog/001-performance-at-a-glance.png)
+
+Interestingly
 
 
 
@@ -276,11 +286,6 @@ Knowing whether someone took a medication may matter more than knowing the locat
 
 So, I want to answer the following question: **How can we balance information gain, domain-specific value, and human burden to decide when—and how—to ask a follow-up question?**
 
-
-
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
 
-[^2]: https://www.bls.gov/cps/cpsaat11b.htm
-
-[^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare ya'll this time. 
-
+[^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare ya'll this time.
