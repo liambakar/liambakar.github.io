@@ -284,6 +284,14 @@ If we can do that while keeping the underlying models small, private, and inexpe
 
 Thank you to [Vidya Srinivas](https://vysri.github.io/) for her mentorship and support during this project. Thank you to the [Ubicomp Lab](https://ubicomplab.cs.washington.edu/) for their resources, feedback, and companionship. I had a wonderful time at UW. 
 
+## Artifacts
+
+* Repository: https://github.com/liambakar/information-extraction
+* SFT Model: https://huggingface.co/lbakar/health-log-extraction
+* SFT + GRPO Model: https://huggingface.co/lbakar/health-log-extraction-GRPO
+* Human-Generated Validation Dataset: https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset
+* Synthetic Train Dataset: https://huggingface.co/datasets/lbakar/health-log-extraction-dataset
+
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
 
 [^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare y'all this time.
