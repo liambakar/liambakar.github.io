@@ -1,0 +1,289 @@
+---
+layout: post
+title: Teaching a Tiny Language Model to Read My Health Diary
+date: 2026-08-20 21:32:00 +00:00
+description: Fine-tuning Qwen3-0.6B to turn free-form health diary entries into
+  structured logs. What can we do with this knowledge? Where can we go from
+  here?
+cover_image: /images/blog/image.png
+cover_alt: ""
+tags:
+  - health tracking
+  - Information Extraction
+  - LLM
+  - Qwen3
+  - Fine-Tuning
+  - Reinforcement Learning
+published: true
+---
+## Motivation
+
+There are two broad ways we track health: passive and active tracking. 
+
+Due to the increasing work in wearable sensors such as smartwatches, passive tracking excels at recognizing physical activities, measuring cardiovascular signals, and estimating sleep quality with little effort from the user.
+However, these metrics only capture a part of the whole story about your health.
+Knowing your heart rate does not tell you about the headache you had or that you skipped breakfast or that you're anxious about moving to a new country[^1].
+
+Enter active tracking.
+
+People have been doing this forever when it comes to their nutritional macros or weightlifting progress. 
+
+The issue is that active tracking requires work. 
+However, creating structured and comprehensive health logs from active logs is worth it. So, I want to answer the following:
+
+**How can we take a diary entry or natural description of someone's day and turn that into structured health logs?**
+
+## Idea
+
+As cliche as it sounds, the answer is in language models.
+
+Models like Gemini, Claude, and ChatGPT can reliably convert a free-form description into a structured output such as JSON.
+But using a large hosted model for every health log introduces drawbacks.
+Health diaries can contain highly personal information, and relying on an external API means sending that information to a third-party service.
+Additionally, it's not cheap to use said APIs.
+Specialized information-extraction models like [NuExtract](https://about.nuextract.ai/) fall under the same umbrella, especially after their new [pricing model](https://about.nuextract.ai/pricing). 
+
+So we took a different approach: fine-tuning [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
+
+At around 600M parameters, Qwen3-0.6b is tiny by modern LLM standards; small enough that it can run on cheap hardware or even on your phone.
+Moreover, our task does not require a general-purpose model; it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
+
+I'm obviously not the first to think of diary-styled tracking.
+A growing number of companies and research labs are exploring ways to make health logging feel more natural.
+
+One example, [Luffu](https://luffu.com/), allows people to *"Use voice, text, photos, documents, or app integrations to instantly record information, from medical records and medications to meals and vital signs."*
+
+This is the type of interaction I'm interested in; though, rather than focusing on building the full health-tracking product, I am focusing on the model beneath it.
+
+We fine-tuned Qwen3-0.6b using our general health-log JSON template. 
+For example, given an **input** like *"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"* we want the model to produce an **output** like:
+
+```json
+{
+    "activity": {},
+    "food": {
+        "consumed_items": [],
+        "missing_items": ["breakfast"]
+    },
+    "mood": {
+        "description": "anxious",
+        "classification": ["negative"]
+    },
+    "symptom": {
+        "keywords": ["headache"],
+        "description": "headache possibly due to anxiety"
+    },
+    "treatment": {}
+}
+```
+
+The actual schema is more detailed, but this is essentially the extraction mechanism we wanted the model to learn.
+
+The obvious place to start was supervised fine-tuning (SFT). 
+The hard part about any sort of supervised training is getting the dataset.
+
+What did we use to generate a synthetic dataset? You guessed it— LLMs!
+
+## Dataset
+
+First, we sampled demographic seeds from an occupation and age-range table from the Labor Force Statistics[^2](https://www.bls.gov/cps/cpsaat11b.htm). 
+For each occupation, the pipeline randomly selected an age range, sampled an age within that range, and assigned a gender from a fixed set of options. 
+These demographic seeds were used to prompt an LLM to generate structured personas containing a name, description, medications or supplements, general mood, and possible health conditions or injuries.
+
+We then used each generated persona to synthesize labeled health-log entries. 
+A Jinja prompt template incorporated the persona attributes, the target category set, and few-shot examples of both single-label and multi-label logs, resulting in around 125K health utterances.
+
+Upon inspection of these utterances, it became clear that LLMs do not write like humans.
+Similarly, persona generation can introduce weird distributions, misrepresenting the messiness and ambiguity in real human writing.
+This is something that we left to be addressed in future iterations.
+
+Instead of hand labeling every utterance, the pipeline uses the larger [NuExtract3](https://huggingface.co/numind/NuExtract3) model as a teacher.
+NuExtract3 receives the natural language utterance and a JSON template describing our intended output.
+
+This creates a [pseudo-labeled general-health-information extraction dataset](https://huggingface.co/datasets/lbakar/health-log-extraction-dataset): natural-language inputs paired with structured outputs generated by a stronger model.
+
+We followed a similar structure for our [validation dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset), but we collected real, human-generated logs from two individuals. Turns out apps like [Day One](https://dayoneapp.com/) can be pretty fun!
+
+## Low Budget Environment
+
+
+Given our low-resource research environment, the data labeling (extraction) was distributed across a resumable pool of GPU workers with semaphoring.
+
+We also distributed training jobs across four GPUs. 
+The training job uses data parallelism and
+Lightning's [Distributed Data Parallel Strategy (DDP)](https://lightning.ai/docs/fabric/stable/full-api-reference/api/generated/lightning.fabric.strategies.DDPStrategy) connects the processes into a single distributed training group.
+
+Each GPU independently performs a forward pass on its local examples and calculates the language-model loss. 
+The backward pass calculates gradients for the model replica on that GPU.
+
+## Fine-Tuning
+
+In a sense, this is response-based knowledge distillation. 
+Using a large teacher model, we distill information into our smaller student model. 
+However, it's not classical knowledge distillation as our student model never sees the logits of the teacher. 
+In our case, the student model was Qwen3-0.6B and the teacher was NuExtract3.
+
+Each row is formatted into the following prompt:
+```
+<template>
+The JSON structure to fill in
+</template>
+
+<user>
+The original utterance
+</user>
+
+<assistant>
+The expected structured extraction
+</assistant>
+```
+
+The loss is masked over the template and user message so that Qwen does not learn to reproduce its prompt, but only to generate the structured JSON.
+
+We then perform full-parameter fine-tuning and end up with a [light information-extraction model](https://huggingface.co/lbakar/health-log-extraction) specialized for this particular health and daily-life schema.
+
+## Reinforcement Learning
+
+SFT revolves around matching a target sequence of tokens, but we also want to emphasize extracting the right information, following the schema, and avoiding hallucinations.
+To do this, we chose to augment the SFT model with some RL. 
+
+RL used to be the type of thing you learn in your robotics or algo class, then never again.
+Now, it's a widely used method for post-training language models.
+
+This pipeline uses Group Relative Policy Optimization (GRPO) to refine the existing health-information extraction model.
+For every utterance, we generate four candidate extractions.
+
+Each candidate receives a numerical reward based on the following equation:
+$$
+R_\text{total} = 
+\begin{cases} -1 & \text{not a valid JSON} \\
+R_\text{extraction} + R_\text{schema} - P_\text{hallucination}  & \text{otherwise}\
+\end{cases}
+$$
+
+* $R_\text{extraction}$: a reward for recovering the information present in the diary entry 
+* $R_\text{schema}$: a reward for following the schema and using the correct dtypes
+* $P_\text{hallucination}$: a penalty for adding information unseen in the diary entry
+
+To measure the rewards for extraction and penalties for hallucination, we use a [natural language inference (NLI) model](https://huggingface.co/cross-encoder/nli-deberta-v3-small).
+It reads the utterance alongside the claim made from the extracted value, then judges whether the entry supports or contradicts the claim or if it's neutral.
+
+Because the candidates were generated for the same input, we could score them relative to one another, allowing the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
+
+Now, we have a fine-tuned, [RL-boosted lightweight model](https://huggingface.co/lbakar/health-log-extraction-GRPO).
+
+### Side Note
+
+As I'm writing this, a new approach to structured generation emerged.
+
+Traditional language models that use autoregressive generation output sequentially. This means generating token $c_i$ based on $P(c_i|c_{0}, ..., c_{i-1}, x)$.
+[TypeSafe](https://typesafe.ai/) recently introduced Reinforcement Learning for Calibrated Decisions (RLCD), which trains models to produce typed decisions with probabilities.
+Rather than generating an entire JSON object, these models evaluate predefined output choices in parallel.
+
+For a field with possible values $(c_1,\ldots,c_n)$, the model produces logits $(z_1,\ldots,z_n)$, which can be converted into probabilities using a softmax:
+
+$$P(c_i \mid x)=\frac{\exp(z_i)}{\sum_{j=1}^{n}\exp(z_j)}.$$
+
+For example, rather than generating `"mood": "negative"` as text, the model might produce
+
+$$
+P(\text{positive})=0.05,\qquad
+P(\text{neutral})=0.15,\qquad
+P(\text{negative})=0.80.
+$$
+
+Someone made a pretty cool open-source version of this idea using Qwen2.5 [here](https://huggingface.co/harshatheg/Qwen-2.5-1B-RLCD).
+They use parallel constrained decoding, restricting the model's logits to the valid choices for each field, normalizing over those choices, then evaluating multiple fields from a shared KV cache.
+
+Only a few fields in our health-log come from a predefined set of choices, so RLCD may not be as useful for us. It may be worth exploring a mixed approach in the future.
+
+## Evaluation
+
+We evaluated the models on the [validation dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset) discussed earlier. 
+
+To evaluate structured extraction quality, we define leaf accuracy as the fraction of individual leaf fields in the nested JSON output that exactly match the ground truth:
+
+$$\text{Leaf accuracy} =
+\frac{\text{correct values} + \text{correct nulls}}
+{\text{all ground-truth fields}}$$
+
+Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has $6.7\times$ more parameters and is also the base model for NuExtract3. We do not evaluate against NuExtract because it was used to generate the ground-truth labels for our training and validation sets; evaluating against it would not provide an independent comparison.
+
+![Leaf accuracy](/images/blog/001-performance-at-a-glance.png "Leaf accuracy")
+
+Interestingly, the base Qwen3-0.6B model achieves a higher leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields, whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
+
+![Precision-recall trade-off](/images/blog/04-precision-recall-landscape.png "Precision-recall trade-off")
+
+However, the 1.7B model achieves a higher F1-score, suggesting stronger performance when considering the extraction of non-empty information. Note that precision and recall are only calculated for non-empty fields to avoid artificially inflating the scores.
+
+We also find that the GRPO-based extraction model performs marginally better than the model trained with supervised fine-tuning (SFT) alone.
+During reinforcement learning, the reward function encouraged both schema compliance and an appropriate level of conservatism when deciding whether to populate a field.
+
+In practice, GRPO made the model slightly more reliable at producing well-formed, schema-compliant outputs, but did not noticeably improve the semantic quality of the extracted information. 
+Because our GRPO stage reused the same underlying training data as SFT, this likely did not introduce enough additional new semantic signal for the model to learn. 
+The reinforcement-learning stage therefore appears to have been more useful for producing structure than for improving what it extracts.
+
+## What's next?
+
+Extraction only gets us so far.
+
+If someone writes, *"I had a horrible headache after lunch,"* the model might correctly identify the symptom, its approximate time, and its severity. But there are still many unspecified details.
+
+This introduces the two questions I want to answer in the future:
+
+#### Question 1. What kinds of questions should we ask?
+
+Knowing that information is missing does not tell us what question to ask.
+
+Take the above utterance about the headache after lunch.
+We could ask about the duration, severity, triggers, and frequency.
+These questions would fill different parts of the health record, but they differ in how much effort they require from the user.
+
+The format of the question could also differ. 
+Multiple-choice, short-answer, selection, and confirmation questions affect the interactions surrounding a health logging system and each format brings its own pros and cons. 
+
+People may also have preferences. 
+One person may prefer multiple-choice questions, while another may prefer answering everything in a single sentence.
+
+Those preferences could also depend on context. 
+Someone might be happy to answer a free-text question while sitting at home, but prefer a one-tap response while walking or commuting.
+
+I want to explore whether a system can learn these interaction preferences over time, choosing what to ask and how to ask it in a way that maximizes useful information while minimizing effort.
+
+#### Question 2. How can we justify when to ask a person to fill in missing information?
+
+Every follow-up question has a cost.
+
+Given our extraction mechanism, we can turn this into an [information gain](https://en.wikipedia.org/wiki/Information_gain_(decision_tree)) problem.
+We can generate candidate questions and their corresponding answers, estimate how much each question could reduce entropy or uncertainty in the health log, and compare that benefit against the burden of asking it.
+
+The goal is to ask a question only when
+$$\text{expected information gain} > \text{cost of asking the user}$$
+
+Much literature exists surrounding this[^3], but these NLP approaches represent user burden with a fixed constant or a relatively simple numerical function.
+Human preferences are unlikely to be that simple.
+
+If we can learn a better representation of how people actually perceive the burden of follow-up questions, we may be able to build systems that ask fewer, better questions.
+
+The health domain also provides another useful constraint.
+Not all missing information is equally valuable. 
+Knowing whether someone took a medication may matter more than knowing the location of where they ate lunch.
+
+## Conclusion
+
+By fine-tuning a small Qwen model on health-log extraction, we were able to produce a lightweight model that performs better than substantially larger base models on our validation data while remaining cheap enough to run on modest hardware. 
+
+But extraction is only one part of the problem.
+
+We need to move from models that simply structure user utterances to systems that can intelligently decide when more information would actually be useful.
+
+If we can do that while keeping the underlying models small, private, and inexpensive, natural-language health tracking could become much more rewarding and beneficial.
+
+## Acknowledgements
+
+Thank you to [Vidya Srinivas](https://vysri.github.io/) for her mentorship and support during this project. Thank you to the [Ubicomp Lab](https://ubicomplab.cs.washington.edu/) for their resources, feedback, and companionship. I had a wonderful time at UW. 
+
+[^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
+
+[^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare y'all this time.
