@@ -228,22 +228,16 @@ The reinforcement-learning stage therefore appears to have been more useful for 
 
 Extraction only gets us so far.
 
-If someone writes, *"I had a horrible headache after lunch,"* the model might correctly identify the symptom, its approximate time, and its severity. But there are still plenty of things it doesn't know. 
-
-How long did it last? 
-Did they take anything for it? 
-Has this happened before?
-
-We could ask all of those questions.
+If someone writes, *"I had a horrible headache after lunch,"* the model might correctly identify the symptom, its approximate time, and its severity. But there are still many unspecified details.
 
 This introduces the two questions I want to answer in the future:
 
-#### 1. What kinds of questions should we ask?
+#### Question 1. What kinds of questions should we ask?
 
 Knowing that information is missing does not tell us what question to ask.
 
 Take the above utterance about the headache after lunch.
-We could ask about the duration, severity, triggers, and frequency. 
+We could ask about the duration, severity, triggers, and frequency.
 These questions would fill different parts of the health record, but they differ in how much effort they require from the user.
 
 The format of the question could also differ. 
@@ -255,18 +249,11 @@ One person may prefer multiple-choice questions, while another may prefer answer
 Those preferences could also depend on context. 
 Someone might be happy to answer a free-text question while sitting at home, but prefer a one-tap response while walking or commuting.
 
-So, I want to answer the following question: **What is the best way to request that information from this person, in this context?**
+I want to explore whether a system can learn these interaction preferences over time, choosing what to ask and how to ask it in a way that maximizes useful information while minimizing effort.
 
-I want to explore whether a system can learn these interaction preferences over time. 
-If a user ignores open-ended questions but responds to multiple-choice prompts, the system could adapt. 
-If a user gives more detailed responses when asked about symptoms but gives sparser responses for food logs, the interaction style could vary by category.
-
-This introduces a personalization problem: choosing what to ask and how to ask it in a way that maximizes useful information while minimizing effort.
-
-#### 2. How can we justify when to ask a person to fill in missing information?
+#### Question 2. How can we justify when to ask a person to fill in missing information?
 
 Every follow-up question has a cost.
-It takes time, creates friction, and adds user burden.
 
 Given our extraction mechanism, we can turn this into an [information gain](https://en.wikipedia.org/wiki/Information_gain_(decision_tree)) problem.
 We can generate candidate questions and their corresponding answers, estimate how much each question could reduce entropy or uncertainty in the health log, and compare that benefit against the burden of asking it.
@@ -283,7 +270,19 @@ The health domain also provides another useful constraint.
 Not all missing information is equally valuable. 
 Knowing whether someone took a medication may matter more than knowing the location of where they ate lunch.
 
-So, I want to answer the following question: **How can we balance information gain, domain-specific value, and human burden to decide when—and how—to ask a follow-up question?**
+## Conclusion
+
+By fine-tuning a small Qwen model on health-log extraction, we were able to produce a lightweight model that performs better than substantially larger base models on our validation data while remaining cheap enough to run on modest hardware. 
+
+But extraction is only one part of the problem.
+
+We need to move from models that simply structure user utterances to systems that can intelligently decide when more information would actually be useful.
+
+If we can do that while keeping the underlying models small, private, and inexpensive, natural-language health tracking could become much more rewarding and beneficial.
+
+## Acknowledgements
+
+Thank you to [Vidya Srinivas](https://vysri.github.io/) for her mentorship and assistance during this project. 
 
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
 
