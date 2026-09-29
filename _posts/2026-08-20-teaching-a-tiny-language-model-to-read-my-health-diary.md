@@ -282,7 +282,7 @@ If we can do that while keeping the underlying models small, private, and inexpe
 
 ## Acknowledgements
 
-Thank you to [Vidya Srinivas](https://vysri.github.io/) for her mentorship and assistance during this project. 
+Thank you to [Vidya Srinivas](https://vysri.github.io/) for her mentorship and assistance during this project. Thank you to the [Ubicomp Lab](https://ubicomplab.cs.washington.edu/) for their resources and companionship. I had a wonderful time at UW. 
 
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
 
