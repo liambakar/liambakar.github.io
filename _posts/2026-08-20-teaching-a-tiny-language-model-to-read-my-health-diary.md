@@ -161,10 +161,10 @@ For every utterance, we generate four candidate extractions.
 
 Each candidate receives a numerical reward based on the following equation:
 $$
-R*\text{total} = 
+R_\text{total} = 
 \begin{cases} -1 & \text{not a valid JSON} \
 \
-R*\text{extraction} + R*\text{schema} - P*\text{hallucination}  & \text{otherwise}\
+R_\text{extraction} + R_\text{schema} - P_\text{hallucination}  & \text{otherwise}\
 \end{cases}
 $$
 
