@@ -221,12 +221,13 @@ $$\text{Leaf accuracy} =
 Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has 6.7x more parameters and is also the base model used to finetune NuExtract. We do not validate against NuExtract because that is the model that provided us with our ground truths for the train and validation set. 
 ![Leaf accuracy](/images/blog/001-performance-at-a-glance.png "Leaf accuracy")
 
-Interestingly, Qwen3 0.6B attains a better leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
+Interestingly, Qwen3-0.6B attains a better leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
 
 ![Precision-recall trade-off](/images/blog/04-precision-recall-landscape.png "Precision-recall trade-off")
 
-We do see that the 1.7B model is actually a better overall information-extraction model in its higher F1-score. We also see that the GRPO-based extraction model performs marginally better than the just SFT-based model. This is because the reinforcement learning rewarded maintaining the correct structure and the right amount of field-filling conservatism.
+We do see that the 1.7B model is actually a better overall information-extraction model in its higher F1-score. Note that precision and recall are only calculated for non-empty fields to not artificially inflate the scores.
 
+We also see that the GRPO-based extraction model performs marginally better than the just SFT-based model. This is because the reinforcement learning rewarded maintaining the correct structure and the right amount of field-filling conservatism.
 GRPO made the model slightly more reliable at producing schema-compliant output, but did not improve semantic extraction quality. This is likely because we used the same training set for SFT and GRPO.
 
 ## What's next?
