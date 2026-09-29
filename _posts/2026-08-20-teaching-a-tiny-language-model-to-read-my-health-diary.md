@@ -30,7 +30,7 @@ People have been doing this forever when it comes to tracking their macros when 
 These records capture subjective experiences sensors often miss.
 
 The issue is that active tracking requires work.
-Creating a structured and comprehensive health logs requires more user effort. So, I want to answer the following:
+Creating structured and comprehensive health logs requires more user effort. So, I want to answer the following:
 
 **How can we take a diary entry or natural description of someone's day and turn that into structured health logs?**
 
@@ -39,15 +39,15 @@ Creating a structured and comprehensive health logs requires more user effort. S
 As cliche as it sounds, the answer is in language models.
 
 Models like Gemini, Claude, and ChatGPT can reliably convert a free-form description into a structured output such as JSON.
-But using a large hosted model for every health log introduces a couple drawbacks.
+But using a large hosted model for every health log introduces drawbacks.
 Health diaries can contain highly personal information, and relying on an external API means sending that information to a third-party service.
 Additionally, it's not cheap to use said APIs.
 Specialized information-extraction models like [NuExtract](https://about.nuextract.ai/) fall under the same umbrella, especially after their new [pricing model](https://about.nuextract.ai/pricing). 
 
-So we took a different approach: fine-tuning [Qwen3-0.6b](https://huggingface.co/Qwen/Qwen3-0.6B).
+So we took a different approach: fine-tuning [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
 
 At around 600M parameters, Qwen3-0.6b is tiny by modern LLM standards; small enough that it can run on cheap hardware or even on your phone.
-Moreover, our task does not require a general-purpose model, it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
+Moreover, our task does not require a general-purpose model; it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
 
 I'm obviously not the first to think of diary-styled tracking.
 A growing number of companies and research labs are exploring ways to make health logging feel more natural.
