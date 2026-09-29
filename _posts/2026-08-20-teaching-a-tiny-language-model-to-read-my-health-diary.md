@@ -277,7 +277,7 @@ Every follow-up question has a cost.
 It takes time, creates friction, and adds user burden.
 
 Given our extraction mechanism, we can turn this into an [information gain](https://en.wikipedia.org/wiki/Information_gain_(decision_tree)) problem.
-We can generate candidate questions and their corresponding answers, estimate how much each question could reduce entropy or uncertainty in the health log, and compare that benefit with against the burden of asking it.
+We can generate candidate questions and their corresponding answers, estimate how much each question could reduce entropy or uncertainty in the health log, and compare that benefit against the burden of asking it.
 
 The goal is to ask a question only when
 $$\text{expected information gain} > \text{cost of asking the user}$$
@@ -295,4 +295,4 @@ So, I want to answer the following question: **How can we balance information ga
 
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
 
-[^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare ya'll this time.
+[^3]: I do recommend reading these papers because they're well written, but they do unfortunately simplify human perspectives to constants or linear values. Check [this](https://aclanthology.org/2025.findings-naacl.306/) and [this](http://arxiv.org/abs/2302.09664) and [this](http://aclweb.org/anthology/P18-1255) and [this](http://arxiv.org/abs/2508.21184). There are many more, but I'll spare y'all this time.
