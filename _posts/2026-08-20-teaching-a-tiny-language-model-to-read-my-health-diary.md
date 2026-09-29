@@ -165,20 +165,18 @@ $$
 * $R_\text{schema}$: a reward for following the schema and using the correct dtypes
 * $P_\text{hallucination}$: a penalty for adding information unseen in the diary entry
 
-To measure the rewards for extraction and penalties for hallucination, we use a natural language inference (NLI) model.
+To measure the rewards for extraction and penalties for hallucination, we use a [natural language inference (NLI) model](https://huggingface.co/cross-encoder/nli-deberta-v3-small).
 It reads the utterance alongside the claim made from the extracted value, then judges whether the entry supports or contradicts the claim or if it's neutral.
 
-Because the candidates were generated for the same input, we could score them relative to one another. 
-GRPO normalizes rewards within the group, giving above-average responses positive advantages and below-average responses negative advantages.
-This allows the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
-These candidates have a higher likelihood of being generated.
+Because the candidates were generated for the same input, we could score them relative to one another, allowing the model to learn which generated candidates are better in comparison to others rather than arbitrarily.
 
 Now, we have a fine-tuned, [RL-boosted lightweight model](https://huggingface.co/lbakar/health-log-extraction-GRPO).
 
 ### Side Note
 
 As I'm writing this, a new approach to structured generation emerged.
-Traditional language models that use autoregressive generation output sequentially. This means generating one token at a time, with each token conditioned on everything before it.
+
+Traditional language models that use autoregressive generation output sequentially. This means generating token $c_i$ based on $P(c_i|c_{0}, ..., c_{i-1}, x)$.
 [TypeSafe](https://typesafe.ai/) recently introduced Reinforcement Learning for Calibrated Decisions (RLCD), which trains models to produce typed decisions with probabilities.
 Rather than generating an entire JSON object, these models evaluate predefined output choices in parallel.
 
