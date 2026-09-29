@@ -43,7 +43,7 @@ Health diaries can contain highly personal information, and relying on an extern
 Additionally, it's not cheap to use said APIs.
 Specialized information-extraction models like [NuExtract](https://about.nuextract.ai/) fall under the same umbrella, especially after their new [pricing model](https://about.nuextract.ai/pricing). 
 
-So we took a different approach: fine-tuning [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
+So we took a different approach: Fine-tuning [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
 
 At around 600M parameters, Qwen3-0.6b is tiny by modern LLM standards; small enough that it can run on cheap hardware or even on your phone.
 Moreover, our task does not require a general-purpose model; it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
