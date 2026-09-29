@@ -255,7 +255,7 @@ We could ask about the duration, severity, triggers, and frequency.
 These questions would fill different parts of the health record, but they differ in how much effort they require from the user.
 
 The format of the question could also differ. 
-Multiple choice, short answer, selection, and confirmation questions affect the interactions surrounding a health logging system and each format brings its own pros and cons. 
+Multiple-choice, short-answer, selection, and confirmation questions affect the interactions surrounding a health logging system and each format brings its own pros and cons. 
 
 People may also have preferences. 
 One person may prefer multiple-choice questions, while another may prefer answering everything in a single sentence.
@@ -267,7 +267,7 @@ So, I want to answer the following question: **What is the best way to request t
 
 I want to explore whether a system can learn these interaction preferences over time. 
 If a user ignores open-ended questions but responds to multiple-choice prompts, the system could adapt. 
-If a user gives more detailed responses when asked about symptoms but gives more sparse responses for food logs, the interaction style could vary by category.
+If a user gives more detailed responses when asked about symptoms but gives sparser responses for food logs, the interaction style could vary by category.
 
 This introduces a personalization problem: choosing what to ask and how to ask it in a way that maximizes useful information while minimizing effort.
 
