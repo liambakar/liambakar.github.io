@@ -26,11 +26,10 @@ Knowing your heart rate does not tell you about the headache you had or that you
 
 Enter active tracking.
 
-People have been doing this forever when it comes to tracking their macros when they eat or their progress when they lift. 
-These records capture subjective experiences sensors often miss.
+People have been doing this forever when it comes to their nutritional macros or weightlifting progress. 
 
-The issue is that active tracking requires work.
-Creating structured and comprehensive health logs requires more user effort. So, I want to answer the following:
+The issue is that active tracking requires work. 
+However, creating structured and comprehensive health logs from active logs is worth it. So, I want to answer the following:
 
 **How can we take a diary entry or natural description of someone's day and turn that into structured health logs?**
 
