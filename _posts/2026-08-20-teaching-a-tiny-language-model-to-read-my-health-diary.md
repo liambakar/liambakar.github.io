@@ -56,7 +56,7 @@ One example, [Luffu](https://luffu.com/), allows people to *"Use voice, text, ph
 
 This is the type of interaction I'm interested in; though rather than focusing on building the full health-tracking product, I am focusing on the model beneath it.
 
-I want to to ensure that the model is small, reliable, private, and cheap.
+I want to ensure that the model is small, reliable, private, and cheap.
 
 We fine-tuned Qwen3-0.6b specifically for information extraction using our general health-log JSON template. 
 For example, given an **input** like *"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"* we want the model to produce an **output** like:
