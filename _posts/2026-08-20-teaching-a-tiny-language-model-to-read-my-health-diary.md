@@ -223,7 +223,7 @@ Interestingly, the base Qwen3-0.6B model achieves a higher leaf accuracy than it
 
 ![Precision-recall trade-off](/images/blog/04-precision-recall-landscape.png "Precision-recall trade-off")
 
-However, the 1.7B model achieves a higher F1-score, suggesting stronger performance when considering the extraction of non-empty information. Note that precision and recall are only calculated for non-empty fields to not artificially inflate the scores.
+However, the 1.7B model achieves a higher F1-score, suggesting stronger performance when considering the extraction of non-empty information. Note that precision and recall are only calculated for non-empty fields to avoid artificially inflating the scores.
 
 We also find that the GRPO-based extraction model performs marginally better than the model trained with supervised fine-tuning (SFT) alone.
 During reinforcement learning, the reward function encouraged both schema compliance and an appropriate level of conservatism when deciding whether to populate a field.
