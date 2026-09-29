@@ -286,11 +286,11 @@ Thank you to [Vidya Srinivas](https://vysri.github.io/) for her mentorship and s
 
 ## Artifacts
 
-* Repository: https://github.com/liambakar/information-extraction
-* SFT Model: https://huggingface.co/lbakar/health-log-extraction
-* SFT + GRPO Model: https://huggingface.co/lbakar/health-log-extraction-GRPO
-* Human-Generated Validation Dataset: https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset
-* Synthetic Train Dataset: https://huggingface.co/datasets/lbakar/health-log-extraction-dataset
+* Repository: [https://github.com/liambakar/information-extraction](https://github.com/liambakar/information-extraction)
+* SFT Model: [https://huggingface.co/lbakar/health-log-extraction](https://huggingface.co/lbakar/health-log-extraction)
+* SFT + GRPO Model: [https://huggingface.co/lbakar/health-log-extraction-GRPO](https://huggingface.co/lbakar/health-log-extraction-GRPO)
+* Human-Generated Validation Dataset: [https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset](https://huggingface.co/datasets/lbakar/real-human-logs-extraction-dataset)
+* Synthetic Train Dataset: [https://huggingface.co/datasets/lbakar/health-log-extraction-dataset](https://huggingface.co/datasets/lbakar/health-log-extraction-dataset)
 
 [^1]: There actually is lots of research on using wearable devices to extrapolate information about your symptoms like [this](https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2021.625247/full) and [this](https://dl.acm.org/doi/abs/10.1145/3770655), so that statement might soon become outdated.
 
