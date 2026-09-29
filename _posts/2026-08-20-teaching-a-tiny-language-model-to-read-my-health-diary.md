@@ -20,7 +20,7 @@ published: true
 
 There are two broad ways we track health: passive and active tracking. 
 
-Due to the increasing work in wearable sensors in smartwatches and similar devices, passive tracking excels at recognizing physical activities, measuring cardiovascular signals, and estimating sleep quality with little effort from the user.
+Due to the increasing work in wearable sensors such as smartwatches, passive tracking excels at recognizing physical activities, measuring cardiovascular signals, and estimating sleep quality with little effort from the user.
 However, these metrics only capture a part of the whole story about your health.
 Knowing your heart rate does not tell you about the headache you had or that you skipped breakfast or that you're anxious about moving to a new country[^1].
 
