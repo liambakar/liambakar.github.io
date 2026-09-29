@@ -191,7 +191,7 @@ Rather than generating an entire JSON object, these models evaluate predefined o
 
 For a field with possible values $(c_1,\ldots,c_n)$, the model produces logits $(z_1,\ldots,z_n)$, which can be converted into probabilities using a softmax:
 
-$$P(c*i \mid x)=\frac{\exp(z_i)}{\sum*{j=1}^{n}\exp(z_j)}.$$
+$$P(c_i \mid x)=\frac{\exp(z_i)}{\sum_{j=1}^{n}\exp(z_j)}.$$
 
 For example, rather than generating `"mood": "negative"` as text, the model might produce
 
@@ -202,7 +202,7 @@ P(\text{negative})=0.80.
 $$
 
 Someone made a pretty cool open-source version of this idea using Qwen2.5 [here](https://huggingface.co/harshatheg/Qwen-2.5-1B-RLCD).
-They use parallel constrained decoding, restricting the model's logits to the valid choices for each field, normalizing over those choices, then evaluating multiple fields from a shared KV cache rather.
+They use parallel constrained decoding, restricting the model's logits to the valid choices for each field, normalizing over those choices, then evaluating multiple fields from a shared KV cache.
 
 Only a few fields in our health-log come from a predefined set of choices, so RLCD may not be as useful for us. It may be worth exploring a mixed approach in the future.
 
