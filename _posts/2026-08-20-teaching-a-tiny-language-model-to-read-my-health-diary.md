@@ -43,7 +43,7 @@ Health diaries can contain highly personal information, and relying on an extern
 Additionally, it's not cheap to use said APIs.
 Specialized information-extraction models like [NuExtract](https://about.nuextract.ai/) fall under the same umbrella, especially after their new [pricing model](https://about.nuextract.ai/pricing). 
 
-So we took a different approach: Fine-tuning [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
+So we took a different approach: fine-tuning [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B).
 
 At around 600M parameters, Qwen3-0.6b is tiny by modern LLM standards; small enough that it can run on cheap hardware or even on your phone.
 Moreover, our task does not require a general-purpose model; it just needs to be able to reliably map an unstructured description of a person's health into a predefined schema. 
@@ -53,11 +53,9 @@ A growing number of companies and research labs are exploring ways to make healt
 
 One example, [Luffu](https://luffu.com/), allows people to *"Use voice, text, photos, documents, or app integrations to instantly record information, from medical records and medications to meals and vital signs."*
 
-This is the type of interaction I'm interested in; though rather than focusing on building the full health-tracking product, I am focusing on the model beneath it.
+This is the type of interaction I'm interested in; though, rather than focusing on building the full health-tracking product, I am focusing on the model beneath it.
 
-I want to ensure that the model is small, reliable, private, and cheap.
-
-We fine-tuned Qwen3-0.6b specifically for information extraction using our general health-log JSON template. 
+We fine-tuned Qwen3-0.6b using our general health-log JSON template. 
 For example, given an **input** like *"I had a headache this morning so I skipped breakfast, it's probably because I'm feeling anxious about moving to the UK,"* we want the model to produce an **output** like:
 
 ```json
@@ -97,6 +95,7 @@ A Jinja prompt template incorporated the persona attributes, the target category
 
 Upon inspection of these utterances, it became clear that LLMs do not write like humans.
 Similarly, persona generation can introduce weird distributions, misrepresenting the messiness and ambiguity in real human writing.
+This is something that we left to be addressed in future iterations.
 
 Instead of hand labeling every utterance, the pipeline uses the larger [NuExtract3](https://huggingface.co/numind/NuExtract3) model as a teacher.
 NuExtract3 receives the natural language utterance and a JSON template describing our intended output.
