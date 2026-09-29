@@ -252,7 +252,7 @@ Knowing that information is missing does not tell us what question to ask.
 
 Take the above utterance about the headache after lunch.
 We could ask about the duration, severity, triggers, and frequency. 
-Each question would fill a different part of the health record, but differ in how much effort they require from the user.
+These questions would fill different parts of the health record, but they differ in how much effort they require from the user.
 
 The format of the question could also differ. 
 Multiple choice, short answer, selection, and confirmation questions affect the interactions surrounding a health logging system and each format brings its own pros and cons. 
