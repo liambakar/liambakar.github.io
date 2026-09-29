@@ -215,11 +215,11 @@ $$\text{Leaf accuracy} =
 \frac{\text{correct values} + \text{correct nulls}}
 {\text{all ground-truth fields}}$$
 
-Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has 6.7x more parameters and is also the base model used to fine-tune NuExtract. We do not validate against NuExtract because that is the model that provided us with our ground truths for the train and validation set; evaluating against it would not provide an independent comparison.
+Our Health Log Extraction models outperform the base Qwen models, including [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) which has $6.7\times$ more parameters and is also the base model used to fine-tune NuExtract. We do not evaluate against NuExtract because it was used to generate the ground-truth labels for our training and validation sets; evaluating against it would not provide an independent comparison.
 
 ![Leaf accuracy](/images/blog/001-performance-at-a-glance.png "Leaf accuracy")
 
-Interestingly, the base Qwen3-0.6B model achieves a higher leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
+Interestingly, the base Qwen3-0.6B model achieves a higher leaf accuracy than its 1.7B sibling. This is because the smaller model is less aggressive about filling JSON fields, whereas the 1.7B model attempts more extractions, and those extractions may be incorrect.
 
 ![Precision-recall trade-off](/images/blog/04-precision-recall-landscape.png "Precision-recall trade-off")
 
