@@ -110,25 +110,20 @@ We followed a similar structure for our [validation dataset](https://huggingface
 Given our low-resource research environment, the data labeling (extraction) was distributed across a resumable pool of GPU workers with semaphoring.
 
 We also distributed training jobs across four GPUs. 
-The training job uses data parallelism; each of the four GPUs holds a complete copy of the model and the training examples are divided among them. 
+The training job uses data parallelism and
 Lightning's [Distributed Data Parallel Strategy (DDP)](https://lightning.ai/docs/fabric/stable/full-api-reference/api/generated/lightning.fabric.strategies.DDPStrategy) connects the processes into a single distributed training group.
 
 Each GPU independently performs a forward pass on its local examples and calculates the language-model loss. 
 The backward pass calculates gradients for the model replica on that GPU.
-
-The configuration accumulates gradients for 16 microbatches before updating the model.
-Each GPU processes `4 examples × 16 microbatches = 64 examples`.
-Across four GPUs, one optimizer update represents approximately `4 examples/GPU × 4 GPUs × 16 accumulation steps = 256 examples`.
-So the nominal effective global batch size is 256.
 
 ## Fine-Tuning
 
 In a sense, this is response-based knowledge distillation. 
 Using a large teacher model, we distill information into our smaller student model. 
 However, it's not classical knowledge distillation as our student model never sees the logits of the teacher. 
-In our case, the student model was Qwen3-0.6B.
-Each row is formatted into the following prompt:
+In our case, the student model was Qwen3-0.6B and the teacher was NuExtract3.
 
+Each row is formatted into the following prompt:
 ```
 <template>
 The JSON structure to fill in
@@ -143,8 +138,7 @@ The expected structured extraction
 </assistant>
 ```
 
-The loss is masked over the template and user message. 
-Qwen is not trained to reproduce its prompt; it is graded only on the structured JSON it should generate. 
+The loss is masked over the template and user message so that Qwen does not learn to reproduce its prompt, but only to generate the structured JSON.
 
 We then perform full-parameter fine-tuning and end up with a [light information-extraction model](https://huggingface.co/lbakar/health-log-extraction) specialized for this particular health and daily-life schema.
 
