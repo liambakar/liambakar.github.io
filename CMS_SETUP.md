@@ -47,7 +47,7 @@ must create post branches and pull requests in this public repository.
    editorial workflow and choose **Publish** when it is ready. Decap squash
    merges the draft into `main`; GitHub Pages then rebuilds the site.
 
-The older hand-authored files in `blog-posts/` are unchanged. New Markdown posts
+The older hand-authored posts live in `academic/blog-posts/` and are unchanged. New Markdown posts
 appear above them on the homepage and are also listed at `/blog/`.
 
 ## Security notes
